@@ -1,6 +1,7 @@
 import Root from './root';
-import Home from './components/pages/home';
-import About from './components/pages/about';
+import Live from './components/pages/live';
+import Results from './components/pages/results';
+import Scheduled from './components/pages/scheduled';
 
 const routes = [
   {
@@ -9,15 +10,15 @@ const routes = [
       {
         path: '/',
         exact: true,
-        component: Home,
+        component: Live,
       },
       {
-        path: '/home',
-        component: Home,
+        path: '/results',
+        component: Results,
       },
       {
-        path: '/about',
-        component: About,
+        path: '/scheduled',
+        component: Scheduled,
       },
     ],
   },
