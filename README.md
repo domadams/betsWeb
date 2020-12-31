@@ -1,5 +1,5 @@
-# react-ssr
-Simple React SSR server
+# BetsWeb Website
+BetsWeb website code
 
 ## Getting Started
 
