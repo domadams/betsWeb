@@ -1,6 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const nodeDir = `${__dirname}/node_modules`;
@@ -19,7 +20,7 @@ const commonLoaders = [
       },
       'css-loader',
     ],
-  }
+  },
 ];
 
 module.exports = [
@@ -39,6 +40,11 @@ module.exports = [
     resolve: {
       extensions: [' ', '.js', '.jsx'],
     },
+    plugins: [
+      new webpack.DefinePlugin({
+        __isBrowser__: 'true',
+      }),
+    ],
   },
   {
     // The configuration for the server-side rendering
@@ -76,6 +82,9 @@ module.exports = [
       new MiniCssExtractPlugin({
         filename: 'public/[name].css',
       }),
-    ]
+      new webpack.DefinePlugin({
+        __isBrowser__: 'false',
+      }),
+    ],
   },
 ];

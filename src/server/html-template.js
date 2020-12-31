@@ -3,7 +3,9 @@
  * @param content - content we want to pass in
  * @returns {string} of content to render in browser
  ************************************************* */
-const htmlTemplate = (title, content) => (
+import serialize from 'serialize-javascript';
+
+const htmlTemplate = (title, content, data) => (
   `<!doctype html>
         <html lang="en">
             <head>
@@ -12,14 +14,14 @@ const htmlTemplate = (title, content) => (
                 <meta name="keywords" content="Keywords go here">
                 <meta name="description" content="What is this here to do?">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-                <link href="/main.css" rel="stylesheet">
+                 <script>window.__INITIAL_DATA__ = ${serialize(data)}</script>
                 <title>${title}</title>
             </head>
             <body>
                 <div id="content">${content}</div>
-                <script type="text/javascript" src="/app.js"></script>
+                <script type="text/javascript" src="/app.js"></script>   
             </body>
         </html>`
 );
 
-module.exports = htmlTemplate;
+export default htmlTemplate;

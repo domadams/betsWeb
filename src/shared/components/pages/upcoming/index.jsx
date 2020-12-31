@@ -1,41 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-function Live({ fetchInitialData, staticContext }) {
-  const [events, setEvents] = useState(() => (__isBrowser__
+function Upcoming({ fetchInitialData, staticContext }) {
+  const [upcoming, setUpcoming] = useState(() => (__isBrowser__
     ? window.__INITIAL_DATA__
     : staticContext.data));
 
   const [loading, setLoading] = useState(
-    !events,
+    !upcoming,
   );
 
-  const fetchNewEvents = useRef(
-    !events,
+  const fetchNewUpcomingEvents = useRef(
+    !upcoming,
   );
 
   useEffect(() => {
-    if (fetchNewEvents.current === true) {
+    if (fetchNewUpcomingEvents.current === true) {
       setLoading(true);
 
       fetchInitialData()
-        .then((data) => {
-          setEvents(data);
+        .then((events) => {
+          setUpcoming(events);
           setLoading(false);
         });
     } else {
-      fetchNewEvents.current = true;
+      fetchNewUpcomingEvents.current = true;
     }
-  }, [fetchNewEvents]);
+  }, [fetchNewUpcomingEvents]);
 
   if (loading === true) {
-    return <i className="loading">Loading...️</i>;
+    return <i className="loading">Loading...️️</i>;
   }
 
   return (
     <>
       <ul className="grid">
-        {events.results.map((
+        {upcoming.results.map((
           {
             away: { name: awayName },
             home: { name: homeName },
@@ -62,9 +62,9 @@ function Live({ fetchInitialData, staticContext }) {
   );
 }
 
-Live.propTypes = {
+Upcoming.propTypes = {
   fetchInitialData: PropTypes.func.isRequired,
   staticContext: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default Live;
+export default Upcoming;

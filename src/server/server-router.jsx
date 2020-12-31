@@ -7,19 +7,29 @@
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
-
+import { StaticRouter, matchPath } from 'react-router-dom';
+import AppRoot from '../shared/AppRoot';
 import routes from '../shared/routes';
 import htmlTemplate from './html-template';
 
-export default () => (req, res) => {
-  const context = {};
-  const content = renderToString(
-    <StaticRouter location={req.url} context={context}>
-      {renderRoutes(routes)}
-    </StaticRouter>,
-  );
+const router = require('express').Router();
 
-  res.status(200).send(htmlTemplate('Blue Monkey', content));
-};
+router.get('*', (req, res, next) => {
+  const activeRoute = routes.find((route) => matchPath(req.url, route)) || {};
+
+  const promise = activeRoute.fetchInitialData
+    ? activeRoute.fetchInitialData(req.path)
+    : Promise.resolve();
+
+  promise.then((data) => {
+    const content = renderToString(
+      <StaticRouter location={req.url} context={data}>
+        <AppRoot />
+      </StaticRouter>,
+    );
+
+    res.send(htmlTemplate(activeRoute.title, content, data));
+  }).catch(next);
+});
+
+export default router;

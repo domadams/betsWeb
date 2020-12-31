@@ -26,11 +26,14 @@
   "dependencies": {
     "express": "^4.17.1",
     "helmet": "^4.2.0",
+    "isomorphic-fetch": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-config": "^5.1.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "request": "^2.88.2",
+    "serialize-javascript": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

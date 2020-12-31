@@ -1,13 +1,11 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
-import routes from '../shared/routes';
+import AppRoot from '../shared/AppRoot';
 
-const AppRouter = () => (
+hydrate(
   <BrowserRouter>
-    {renderRoutes(routes)}
-  </BrowserRouter>
+    <AppRoot />
+  </BrowserRouter>,
+  document.getElementById('content'),
 );
-
-hydrate(<AppRouter />, document.querySelector('#content'));
