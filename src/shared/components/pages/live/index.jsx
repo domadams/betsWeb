@@ -1,32 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import loadEvents from '../../helpers/loadEvents';
 
 function Live({ fetchInitialData, staticContext }) {
-  const [events, setEvents] = useState(() => (__isBrowser__
-    ? window.__INITIAL_DATA__
-    : staticContext.data));
-
-  const [loading, setLoading] = useState(
-    !events,
-  );
-
-  const fetchNewEvents = useRef(
-    !events,
-  );
-
-  useEffect(() => {
-    if (fetchNewEvents.current === true) {
-      setLoading(true);
-
-      fetchInitialData()
-        .then((data) => {
-          setEvents(data);
-          setLoading(false);
-        });
-    } else {
-      fetchNewEvents.current = true;
-    }
-  }, [fetchNewEvents]);
+  const { loading, events } = loadEvents(fetchInitialData, staticContext);
 
   if (loading === true) {
     return <i className="loading">Loading...️</i>;

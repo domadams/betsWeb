@@ -1,41 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import loadEvents from '../../helpers/loadEvents';
 
 function Upcoming({ fetchInitialData, staticContext }) {
-  const [upcoming, setUpcoming] = useState(() => (__isBrowser__
-    ? window.__INITIAL_DATA__
-    : staticContext.data));
-
-  const [loading, setLoading] = useState(
-    !upcoming,
-  );
-
-  const fetchNewUpcomingEvents = useRef(
-    !upcoming,
-  );
-
-  useEffect(() => {
-    if (fetchNewUpcomingEvents.current === true) {
-      setLoading(true);
-
-      fetchInitialData()
-        .then((events) => {
-          setUpcoming(events);
-          setLoading(false);
-        });
-    } else {
-      fetchNewUpcomingEvents.current = true;
-    }
-  }, [fetchNewUpcomingEvents]);
+  const { loading, events } = loadEvents(fetchInitialData, staticContext);
 
   if (loading === true) {
-    return <i className="loading">Loading...️️</i>;
+    return <i className="loading">Loading...️</i>;
   }
 
   return (
     <>
       <ul className="grid">
-        {upcoming.results.map((
+        {events.results.map((
           {
             away: { name: awayName },
             home: { name: homeName },

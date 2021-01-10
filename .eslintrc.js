@@ -8,6 +8,7 @@ module.exports = {
     __isBrowser__: true,
   },
   rules: {
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': ['error', { allow: ['__INITIAL_DATA__'] }],
     'react/prefer-stateless-function': 0,
     'jsx-a11y/anchor-is-valid': ['error', {

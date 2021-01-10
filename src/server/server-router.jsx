@@ -14,22 +14,22 @@ import htmlTemplate from './html-template';
 
 const router = require('express').Router();
 
-router.get('*', (req, res, next) => {
-  const activeRoute = routes.find((route) => matchPath(req.url, route)) || {};
+export default function routers(nonce) {
+  return router.get('*', (req, res, next) => {
+    const activeRoute = routes.find((route) => matchPath(req.url, route)) || {};
 
-  const promise = activeRoute.fetchInitialData
-    ? activeRoute.fetchInitialData(req.path)
-    : Promise.resolve();
+    const promise = activeRoute.fetchInitialData
+      ? activeRoute.fetchInitialData()
+      : Promise.resolve();
 
-  promise.then((data) => {
-    const content = renderToString(
-      <StaticRouter location={req.url} context={data}>
-        <AppRoot />
-      </StaticRouter>,
-    );
+    promise.then((data) => {
+      const content = renderToString(
+        <StaticRouter location={req.url} context={data}>
+          <AppRoot />
+        </StaticRouter>,
+      );
 
-    res.send(htmlTemplate(activeRoute.title, content, data));
-  }).catch(next);
-});
-
-export default router;
+      res.send(htmlTemplate(activeRoute.title, content, data, req.url, nonce));
+    }).catch(next);
+  });
+}

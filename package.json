@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config=config/webpack.prod.js",
     "lint:js": "eslint --ext .jsx,.js .",
     "dev": "webpack && node dist/server.js",
     "start": "node server.generated.js"
@@ -24,9 +24,12 @@
   },
   "homepage": "https://github.com/domadams/react-ssr#readme",
   "dependencies": {
+    "compression": "^1.7.4",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
     "isomorphic-fetch": "^3.0.0",
+    "pre-compressed-assets": "^2.1.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -41,6 +44,8 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^7.1.1",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
     "eslint": "^7.16.0",
@@ -51,7 +56,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "mini-css-extract-plugin": "^1.3.3",
     "webpack": "^5.11.0",
-    "webpack-cli": "^4.3.0",
+    "webpack-cli": "^4.3.1",
+    "webpack-merge": "^5.7.3",
     "webpack-node-externals": "^2.5.2"
   }
 }

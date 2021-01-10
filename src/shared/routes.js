@@ -10,7 +10,7 @@ const routes = [
     title: 'BetsWeb - Live Events',
     exact: true,
     component: Live,
-    fetchInitialData: (path = '') => fetchLiveMatches(path.split('/').pop()),
+    fetchInitialData: () => fetchLiveMatches(),
   },
   {
     path: '/results',

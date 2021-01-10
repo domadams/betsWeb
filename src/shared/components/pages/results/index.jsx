@@ -1,41 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import loadEvents from '../../helpers/loadEvents';
 
 function matchResults({ fetchInitialData, staticContext }) {
-  const [results, setResults] = useState(() => (__isBrowser__
-    ? window.__INITIAL_DATA__
-    : staticContext.data));
-
-  const [loading, setLoading] = useState(
-    !results,
-  );
-
-  const fetchNewResults = useRef(
-    !results,
-  );
-
-  useEffect(() => {
-    if (fetchNewResults.current === true) {
-      setLoading(true);
-
-      fetchInitialData()
-        .then((data) => {
-          setResults(data);
-          setLoading(false);
-        });
-    } else {
-      fetchNewResults.current = true;
-    }
-  }, [fetchNewResults]);
+  const { loading, events } = loadEvents(fetchInitialData, staticContext);
 
   if (loading === true) {
-    return <i className="loading">Loading...️️</i>;
+    return <i className="loading">Loading...️</i>;
   }
 
   return (
     <>
       <ul className="grid">
-        {results.results.map((
+        {events.results.map((
           {
             away: { name: awayName },
             home: { name: homeName },

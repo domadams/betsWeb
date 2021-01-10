@@ -8,11 +8,20 @@
 import express from 'express';
 import { join as joinPath } from 'path';
 import helmet from 'helmet';
+import crypto from 'crypto';
+import preCompressedAssets from 'pre-compressed-assets';
+import compression from 'compression';
+import contentSecurityPolicy from './middleware/contentSecurityPolicy';
 import apiRoutes from './api-routes';
 import router from './server-router';
 
+const nonce = crypto.randomBytes(16).toString('base64');
+
 export default () => express()
+  .use(preCompressedAssets(/\.(js|css)$/, joinPath(__dirname, 'public')))
+  .use(compression())
   .use(express.static(joinPath(__dirname, 'public')))
   .use(helmet())
+  .use(contentSecurityPolicy(nonce))
   .use('/api', apiRoutes)
-  .use('/', router);
+  .use('/', router(nonce));
