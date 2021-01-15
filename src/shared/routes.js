@@ -6,6 +6,7 @@ import { fetchLiveMatches, fetchUpcomingMatches, fetchMatchResults } from './api
 
 const routes = [
   {
+    name: 'In Play',
     path: '/',
     title: 'BetsWeb - Live Events',
     exact: true,
@@ -13,12 +14,14 @@ const routes = [
     fetchInitialData: () => fetchLiveMatches(),
   },
   {
+    name: 'Results',
     path: '/results',
     title: 'BetsWeb - Results',
     component: Results,
     fetchInitialData: () => fetchMatchResults(),
   },
   {
+    name: 'Scheduled',
     path: '/upcoming',
     title: 'BetsWeb - Upcoming Events',
     component: Scheduled,

@@ -8,6 +8,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import AppRoot from '../shared/AppRoot';
 import routes from '../shared/routes';
 import htmlTemplate from './html-template';
@@ -23,13 +24,19 @@ export default function routers(nonce) {
       : Promise.resolve();
 
     promise.then((data) => {
+      const sheets = new ServerStyleSheets();
       const content = renderToString(
-        <StaticRouter location={req.url} context={data}>
-          <AppRoot />
-        </StaticRouter>,
+        sheets.collect(
+          <StaticRouter location={req.url} context={data}>
+            <AppRoot />
+          </StaticRouter>,
+        ),
       );
 
-      res.send(htmlTemplate(activeRoute.title, content, data, req.url, nonce));
+      // Grab the CSS from the sheets.
+      const css = sheets.toString();
+
+      res.send(htmlTemplate(activeRoute.title, content, data, req.url, nonce, css));
     }).catch(next);
   });
 }

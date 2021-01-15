@@ -7,7 +7,7 @@
     "build": "webpack --config=config/webpack.prod.js",
     "lint:js": "eslint --ext .jsx,.js .",
     "dev": "webpack && node dist/server.js",
-    "start": "node server.generated.js"
+    "start": "NODE_ENV=production node dist/server.generated.js"
   },
   "repository": {
     "type": "git",
@@ -24,19 +24,21 @@
   },
   "homepage": "https://github.com/domadams/react-ssr#readme",
   "dependencies": {
-    "compression": "^1.7.4",
-    "crypto": "^1.0.1",
+    "@material-ui/core": "4.11.2",
+    "@material-ui/icons": "4.11.2",
+    "compression": "1.7.4",
+    "crypto": "1.0.1",
     "express": "^4.17.1",
-    "helmet": "^4.2.0",
-    "isomorphic-fetch": "^3.0.0",
+    "helmet": "4.3.1",
+    "isomorphic-fetch": "3.0.0",
     "pre-compressed-assets": "^2.1.1",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-config": "^5.1.1",
-    "react-router-dom": "^5.2.0",
-    "request": "^2.88.2",
-    "serialize-javascript": "^5.0.1"
+    "prop-types": "15.7.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-router-config": "5.1.1",
+    "react-router-dom": "5.2.0",
+    "request": "2.88.2",
+    "serialize-javascript": "5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

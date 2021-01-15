@@ -5,7 +5,7 @@
  ************************************************* */
 import serialize from 'serialize-javascript';
 
-const htmlTemplate = (title, content, data, path, nonce) => (
+const htmlTemplate = (title, content, data, path, nonce, css) => (
   `<!doctype html>
         <html lang="en">
             <head>
@@ -14,6 +14,8 @@ const htmlTemplate = (title, content, data, path, nonce) => (
                 <meta name="keywords" content="Keywords go here">
                 <meta name="description" content="What is this here to do?">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+                <meta property="csp-nonce" content="${nonce}">
+                <style nonce="${nonce}" id="jss-server-side">${css}</style>
                 <title>${title}</title>
             </head>
             <body>

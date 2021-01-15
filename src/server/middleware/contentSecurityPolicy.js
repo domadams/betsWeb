@@ -15,7 +15,9 @@ export default function contentSecurityPolicy(nonce) {
       scriptSrc: [
         `'nonce-${nonce}'`,
       ].concat(trusted),
-      styleSrc: trusted,
+      styleSrc: [
+        `'nonce-${nonce}'`,
+      ].concat(trusted),
       frameSrc: trusted,
       fontSrc: trusted,
       imgSrc: trusted,
