@@ -10,7 +10,7 @@ const htmlTemplate = (title, content, data, path, nonce, css) => (
         <html lang="en">
             <head>
                 <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
-                <meta httpEquiv="Content-type" content="text/html;charset=utf-8">
+                <meta http-equiv="Content-type" content="text/html;charset=utf-8">
                 <meta name="keywords" content="Keywords go here">
                 <meta name="description" content="What is this here to do?">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
