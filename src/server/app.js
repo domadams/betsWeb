@@ -12,6 +12,7 @@ import crypto from 'crypto';
 import preCompressedAssets from 'pre-compressed-assets';
 import compression from 'compression';
 import contentSecurityPolicy from './middleware/contentSecurityPolicy';
+import errorHandler from './errorHandler';
 import apiRoutes from './api-routes';
 import router from './server-router';
 
@@ -24,4 +25,7 @@ export default () => express()
   .use(helmet())
   .use(contentSecurityPolicy(nonce))
   .use('/api', apiRoutes)
-  .use('/', router(nonce));
+  .use('/', router(nonce))
+  .use((err, req, res, next) => {
+    errorHandler(err, res, nonce);
+  });

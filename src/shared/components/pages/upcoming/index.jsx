@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { List } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
+import LeagueBanner from '../../leagueBanner';
 
-function Upcoming({ fetchInitialData, staticContext }) {
+const Upcoming = ({ fetchInitialData, staticContext }) => {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
 
   if (loading === true) {
@@ -11,33 +13,39 @@ function Upcoming({ fetchInitialData, staticContext }) {
 
   return (
     <>
-      <ul className="grid">
-        {events.results.map((
+      <List className="grid">
+        {events.map((
           {
-            away: { name: awayName },
-            home: { name: homeName },
-
-          }, i,
+            leagueName,
+            countryCode,
+            upcomingMatches,
+          },
         ) => (
-          <li key={homeName}>
-            <h2>
-              #
-              {i + 1}
-            </h2>
-            <h3>
-              Home:
-              {homeName}
-            </h3>
-            <h3>
-              Away:
-              {awayName}
-            </h3>
-          </li>
+          <>
+            <LeagueBanner countryCode={countryCode} leagueName={leagueName} />
+            {upcomingMatches.map((
+              {
+                away: { name: awayName },
+                home: { name: homeName },
+              },
+            ) => (
+              <li key={homeName}>
+                <h3>
+                  Home:
+                  {homeName}
+                </h3>
+                <h3>
+                  Away:
+                  {awayName}
+                </h3>
+              </li>
+            ))}
+          </>
         ))}
-      </ul>
+      </List>
     </>
   );
-}
+};
 
 Upcoming.propTypes = {
   fetchInitialData: PropTypes.func.isRequired,

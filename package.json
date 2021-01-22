@@ -1,7 +1,7 @@
 {
-  "name": "react-ssr",
-  "description": "Simple React SSR server",
-  "version": "0.0.1",
+  "name": "bets-web",
+  "description": "BetsWeb Website",
+  "version": "0.0.2",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config=config/webpack.prod.js",
@@ -32,6 +32,7 @@
     "express": "4.17.1",
     "helmet": "4.3.1",
     "isomorphic-fetch": "3.0.0",
+    "material-ui-flags": "^1.2.4",
     "pre-compressed-assets": "2.1.1",
     "prop-types": "15.7.2",
     "react": "17.0.1",
@@ -56,6 +57,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^1.3.3",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.3.1",

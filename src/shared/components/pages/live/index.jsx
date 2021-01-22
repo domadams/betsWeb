@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { List } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
+import LeagueBanner from '../../leagueBanner';
 
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
@@ -11,6 +13,9 @@ function Live({ fetchInitialData, staticContext }) {
 
   return (
     <>
+      <List>
+        <LeagueBanner countryCode="es" leagueName="A League" />
+      </List>
       <ul className="grid">
         {events.results.map((
           {

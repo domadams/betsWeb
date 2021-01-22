@@ -6,10 +6,7 @@ export function fetchLiveMatches() {
   return fetch(encodedURI)
     .then((data) => data.json())
     .then((data) => data)
-    .catch((error) => {
-      console.warn(error);
-      return null;
-    });
+    .catch(() => null);
 }
 
 export function fetchUpcomingMatches() {
@@ -18,10 +15,7 @@ export function fetchUpcomingMatches() {
   return fetch(encodedURI)
     .then((data) => data.json())
     .then((data) => data)
-    .catch((error) => {
-      console.warn(error);
-      return null;
-    });
+    .catch(() => null);
 }
 
 export function fetchMatchResults() {
@@ -30,8 +24,5 @@ export function fetchMatchResults() {
   return fetch(encodedURI)
     .then((data) => data.json())
     .then((data) => data)
-    .catch((error) => {
-      console.warn(error);
-      return null;
-    });
+    .catch(() => null);
 }

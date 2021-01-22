@@ -3,11 +3,24 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 
 const nodeDir = `${__dirname}/node_modules`;
-const commonLoaders = {
-  test: /\.jsx|\.js$/,
-  exclude: /node_modules/,
-  use: 'babel-loader',
-};
+const commonLoaders = [
+  {
+    test: /\.jsx|\.js$/,
+    exclude: /node_modules/,
+    use: 'babel-loader',
+  },
+  {
+    test: /\.(png|jpe?g|gif)$/i,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/',
+        },
+      },
+    ],
+  },
+];
 
 const clientConfig = {
   // The configuration for the client
@@ -21,9 +34,7 @@ const clientConfig = {
     publicPath: '/',
   },
   module: {
-    rules: [
-      commonLoaders,
-    ],
+    rules: commonLoaders,
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -57,9 +68,7 @@ const serverConfig = {
       `${nodeDir}/react/react.min.js`,
       `${nodeDir}/react/react-dom.min.js`,
     ],
-    rules: [
-      commonLoaders,
-    ],
+    rules: commonLoaders,
   },
   resolve: {
     extensions: [' ', '.js', '.jsx'],

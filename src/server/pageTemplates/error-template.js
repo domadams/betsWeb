@@ -1,11 +1,11 @@
 /** *************************************************
  * @param title - title we want to render
  * @param content - content we want to pass in
+ * @param nonce - nonce value for CSP
+ * @param css - injected css for styling
  * @returns {string} of content to render in browser
  ************************************************* */
-import serialize from 'serialize-javascript';
-
-const htmlTemplate = (title, content, data, path, nonce, css) => (
+const errorTemplate = (title, content, nonce, css) => (
   `<!doctype html>
         <html lang="en">
             <head>
@@ -20,12 +20,8 @@ const htmlTemplate = (title, content, data, path, nonce, css) => (
             </head>
             <body>
                 <div id="content">${content}</div>
-                <input type="hidden" id="path" value="${path}"/>
-                <script nonce="${nonce}" id="initial-data" type="application/json">${serialize(data)}</script>
-                <script type="text/javascript" src="/vendor.js"></script> 
-                <script type="text/javascript" src="/main.js"></script>   
             </body>
         </html>`
 );
 
-export default htmlTemplate;
+export default errorTemplate;

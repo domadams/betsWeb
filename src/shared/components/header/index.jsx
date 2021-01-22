@@ -46,7 +46,7 @@ const Header = ({ routes }) => {
       <Toolbar>
         <Container maxWidth="md" className={classes.navbarDisplayFlex}>
           <Typography variant="h5" className={classes.navDisplayTitle}>
-            SomeTitle.com
+            Statosphere.com
           </Typography>
           <Hidden smDown>
             <List
@@ -54,12 +54,16 @@ const Header = ({ routes }) => {
               aria-labelledby="main navigation"
               className={classes.navDisplayFlex}
             >
-              {routes.map(({ name, path }) => (
-                <Link to={path} key={path} className={classes.linkText}>
-                  <ListItem button>
-                    <ListItemText primary={name} />
-                  </ListItem>
-                </Link>
+              {routes.map(({ name, path, exact }) => (
+                exact
+                  ?
+                  <Link to={path} key={path} className={classes.linkText}>
+                    <ListItem button>
+                      <ListItemText primary={name} />
+                    </ListItem>
+                  </Link>
+                  :
+                  <></>
               ))}
             </List>
           </Hidden>

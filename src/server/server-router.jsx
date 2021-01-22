@@ -11,7 +11,7 @@ import { StaticRouter, matchPath } from 'react-router-dom';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import AppRoot from '../shared/AppRoot';
 import routes from '../shared/routes';
-import htmlTemplate from './html-template';
+import htmlTemplate from './pageTemplates/html-template';
 
 const router = require('express').Router();
 
