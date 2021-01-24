@@ -56,14 +56,14 @@ const Header = ({ routes }) => {
             >
               {routes.map(({ name, path, exact }) => (
                 exact
-                  ?
-                  <Link to={path} key={path} className={classes.linkText}>
-                    <ListItem button>
-                      <ListItemText primary={name} />
-                    </ListItem>
-                  </Link>
-                  :
-                  <></>
+                  ? (
+                    <Link to={path} key={path} className={classes.linkText}>
+                      <ListItem button>
+                        <ListItemText primary={name} />
+                      </ListItem>
+                    </Link>
+                  )
+                  : <></>
               ))}
             </List>
           </Hidden>

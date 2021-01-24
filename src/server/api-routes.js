@@ -38,15 +38,9 @@ router.get('/liveEvents', (req, res, next) => {
 router.get('/upcomingEvents', (req, res, next) => {
   Promise.all([callUpcomingEvents('gb'), callUpcomingEvents('de')])
     .then((results) => {
-      const upcomingResults = [];
+      const mergedResults = [].concat.apply(...results.map((result) => result.data.results));
 
-      results.forEach((result) => {
-        upcomingResults.concat(
-          result.data.results.sort((a, b) => a.league.name.localeCompare(b.league.name)),
-        );
-      });
-
-      return upcomingResults;
+      return mergedResults.sort((a, b) => a.league.name.localeCompare(b.league.name));
     })
     .then((results) => {
       const upcomingEvents = [];
