@@ -28,7 +28,7 @@ const routes = [
     title: 'BetsWeb - Upcoming Events',
     exact: true,
     component: Scheduled,
-    fetchInitialData: () => fetchUpcomingMatches(),
+    fetchInitialData: (sortBy) => fetchUpcomingMatches(sortBy),
   },
   {
     name: 'Error',

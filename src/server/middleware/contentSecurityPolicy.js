@@ -20,7 +20,9 @@ export default function contentSecurityPolicy(nonce) {
       ].concat(trusted),
       frameSrc: trusted,
       fontSrc: trusted,
-      imgSrc: trusted,
+      imgSrc: [
+        'assets.b365api.com',
+      ].concat(trusted),
     },
   });
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { List } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
+import DateBanner from '../../dateBanner';
+import MatchItem from '../../matchItem';
 
 const Upcoming = ({ fetchInitialData, staticContext }) => {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
@@ -10,35 +12,48 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
   if (loading === true) {
     return <i className="loading">Loading...️</i>;
   }
-
   return (
     <>
       <List className="grid">
         {events.map((
           {
-            leagueName,
-            countryCode,
-            upcomingMatches,
+            date,
+            matches,
           },
         ) => (
           <>
-            <LeagueBanner countryCode={countryCode} leagueName={leagueName} />
-            {upcomingMatches.map((
+            <DateBanner date={date} />
+            {matches.map((
               {
-                away: { name: awayName },
-                home: { name: homeName },
+                leagueName,
+                countryCode,
+                upcomingMatches,
               },
             ) => (
-              <li key={homeName}>
-                <h3>
-                  Home:
-                  {homeName}
-                </h3>
-                <h3>
-                  Away:
-                  {awayName}
-                </h3>
-              </li>
+              <>
+                <LeagueBanner countryCode={countryCode} leagueName={leagueName} />
+                {upcomingMatches.map((
+                  {
+                    home: {
+                      name: homeName,
+                      image_id: homeImageId,
+                    },
+                    away: {
+                      name: awayName,
+                      image_id: awayImageId,
+                    },
+                    time,
+                  },
+                ) => (
+                  <MatchItem
+                    homeImageId={homeImageId}
+                    homeTeamName={homeName}
+                    awayImageId={awayImageId}
+                    awayTeamName={awayName}
+                    kickOffTime={time}
+                  />
+                ))}
+              </>
             ))}
           </>
         ))}

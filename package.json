@@ -33,6 +33,7 @@
     "helmet": "4.4.1",
     "isomorphic-fetch": "3.0.0",
     "material-ui-flags": "1.2.4",
+    "moment": "^2.29.1",
     "pre-compressed-assets": "2.1.1",
     "prop-types": "15.7.2",
     "react": "17.0.1",
