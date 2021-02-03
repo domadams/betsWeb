@@ -1,7 +1,8 @@
 import axios from 'axios';
+import express from 'express';
 import moment from 'moment';
 
-const router = require('express').Router();
+const router = express.Router();
 
 function callApi(url, response, next) {
   axios({

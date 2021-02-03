@@ -1,7 +1,18 @@
 import fetch from 'isomorphic-fetch';
 
+let basePath = 'http://0.0.0.0:8080';
+
+if (__isBrowser__) {
+  const {
+    protocol,
+    hostname,
+    port,
+  } = window.location;
+  basePath = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+}
+
 export function fetchLiveMatches() {
-  const encodedURI = encodeURI('http://localhost:1919/api/liveEvents');
+  const encodedURI = encodeURI(`${basePath}/api/liveEvents`);
 
   return fetch(encodedURI)
     .then((data) => data.json())
@@ -10,7 +21,7 @@ export function fetchLiveMatches() {
 }
 
 export function fetchUpcomingMatches() {
-  const encodedURI = encodeURI('http://localhost:1919/api/upcomingEvents');
+  const encodedURI = encodeURI(`${basePath}/api/upcomingEvents`);
 
   return fetch(encodedURI)
     .then((data) => data.json())
@@ -19,7 +30,7 @@ export function fetchUpcomingMatches() {
 }
 
 export function fetchMatchResults() {
-  const encodedURI = encodeURI('http://localhost:1919/api/eventResults');
+  const encodedURI = encodeURI(`${basePath}/api/eventResults`);
 
   return fetch(encodedURI)
     .then((data) => data.json())

@@ -2,6 +2,8 @@ import helmet from 'helmet';
 
 const trusted = [
   "'self'",
+  'http://0.0.0.0:8080/',
+  'https://statosphere-303317.nw.r.appspot.com/',
 ];
 
 if (process.env.NODE_ENV !== 'production') {
@@ -23,6 +25,7 @@ export default function contentSecurityPolicy(nonce) {
       imgSrc: [
         'assets.b365api.com',
       ].concat(trusted),
+      connectSrc: trusted,
     },
   });
 }

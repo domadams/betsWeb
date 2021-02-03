@@ -15,7 +15,7 @@ const DateBanner = ({ date }) => {
   const classes = useStyles();
 
   return (
-    <ListItem className={classes.dateBanner}>
+    <ListItem className={classes.dateBanner} key={date}>
       {date}
     </ListItem>
   );

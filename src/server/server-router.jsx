@@ -9,11 +9,12 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import express from 'express';
 import AppRoot from '../shared/AppRoot';
 import routes from '../shared/routes';
 import htmlTemplate from './pageTemplates/html-template';
 
-const router = require('express').Router();
+const router = express.Router();
 
 export default function routers(nonce) {
   return router.get('*', (req, res, next) => {
@@ -37,6 +38,6 @@ export default function routers(nonce) {
       const css = sheets.toString();
 
       res.send(htmlTemplate(activeRoute.title, content, data, req.url, nonce, css));
-    }).catch(next);
+    }).catch((error) => next(error));
   });
 }

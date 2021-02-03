@@ -17,5 +17,9 @@ module.exports = {
       specialLink: ['to'],
       aspects: ['noHref', 'invalidHref', 'preferButton'],
     }],
+    'new-cap': ['error', {
+      newIsCapExceptions: ['createLogger'],
+      capIsNewExceptions: ['Router'],
+    }],
   },
 };

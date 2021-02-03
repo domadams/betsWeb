@@ -31,7 +31,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
               },
             ) => (
               <>
-                <LeagueBanner countryCode={countryCode} leagueName={leagueName} />
+                <LeagueBanner countryCode={countryCode} leagueName={leagueName} key={leagueName} />
                 {upcomingMatches.map((
                   {
                     home: {
@@ -51,6 +51,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                     awayImageId={awayImageId}
                     awayTeamName={awayName}
                     kickOffTime={time}
+                    key={homeName}
                   />
                 ))}
               </>
