@@ -8,19 +8,20 @@ import {
   ListItemText,
   Hidden,
   makeStyles, Typography,
+  Fab,
 } from '@material-ui/core';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SideDrawer from '../sideDrawer';
+import HideOnScroll from "../../hideOnScroll";
+import ScrollTop from '../scrollToTop';
 
 const useStyles = makeStyles({
   navbarDisplayFlex: {
     float: 'left',
     display: 'flex',
     justifyContent: 'space-between',
-  },
-  navDisplayBackground: {
-    background: 'linear-gradient(to right bottom, #00224D, #033B7B)',
   },
   navDisplayFlex: {
     display: 'flex',
@@ -42,37 +43,46 @@ const Header = ({ routes }) => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" className={classes.navDisplayBackground}>
-      <Toolbar>
-        <Container maxWidth="md" className={classes.navbarDisplayFlex}>
-          <Typography variant="h5" className={classes.navDisplayTitle}>
-            Statosphere.com
-          </Typography>
-          <Hidden smDown>
-            <List
-              component="nav"
-              aria-labelledby="main navigation"
-              className={classes.navDisplayFlex}
-            >
-              {routes.map(({ name, path, exact }) => (
-                exact
-                  ? (
-                    <Link to={path} key={path} className={classes.linkText}>
-                      <ListItem button>
-                        <ListItemText primary={name} />
-                      </ListItem>
-                    </Link>
-                  )
-                  : <></>
-              ))}
-            </List>
-          </Hidden>
-          <Hidden mdUp>
-            <SideDrawer navLinks={routes} />
-          </Hidden>
-        </Container>
-      </Toolbar>
-    </AppBar>
+    <>
+      <HideOnScroll>
+        <AppBar position="fixed" className={classes.navDisplayBackground}>
+          <Toolbar>
+            <Container maxWidth="md" className={classes.navbarDisplayFlex}>
+              <Typography variant="h5" className={classes.navDisplayTitle}>
+                Statosphere.com
+              </Typography>
+              <Hidden smDown>
+                <List
+                  component="nav"
+                  aria-labelledby="main navigation"
+                  className={classes.navDisplayFlex}
+                >
+                  {routes.map(({ name, path, exact }) => (
+                    exact
+                      ? (
+                        <Link to={path} key={path} className={classes.linkText}>
+                          <ListItem button>
+                            <ListItemText primary={name} />
+                          </ListItem>
+                        </Link>
+                      )
+                      : <></>
+                  ))}
+                </List>
+              </Hidden>
+              <Hidden mdUp>
+                <SideDrawer navLinks={routes} />
+              </Hidden>
+            </Container>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      <ScrollTop>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
+    </>
   );
 };
 

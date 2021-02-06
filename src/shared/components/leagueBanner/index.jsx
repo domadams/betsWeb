@@ -7,7 +7,7 @@ import countries from '../../countries';
 
 const useStyles = makeStyles({
   leagueBanner: {
-    backgroundColor: '#FFFEA6',
+    backgroundColor: '#d0e3ec',
     display: 'flex',
     textTransform: 'uppercase',
     borderTop: '1px solid #999',

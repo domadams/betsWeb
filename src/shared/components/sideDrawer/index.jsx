@@ -49,12 +49,16 @@ const SideDrawer = ({ navLinks }) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List component="nav">
-        {navLinks.map(({ name, path }) => (
-          <Link to={path} key={path} className={classes.linkText}>
-            <ListItem button>
-              <ListItemText primary={name} />
-            </ListItem>
-          </Link>
+        {navLinks.map(({ name, path, exact }) => (
+          exact
+            ? (
+              <Link to={path} key={path} className={classes.linkText}>
+                <ListItem button>
+                  <ListItemText primary={name} />
+                </ListItem>
+              </Link>
+            )
+            : <></>
         ))}
       </List>
     </div>
