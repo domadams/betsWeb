@@ -30,7 +30,10 @@ const useStyles = makeStyles({
   },
   navDisplayTitle: {
     float: 'left',
-    paddingTop: 14,
+    paddingTop: 10,
+    fontWeight: 'bold',
+    fontSize: '1.9rem',
+    letterSpacing: 1,
   },
   linkText: {
     textDecoration: 'none',

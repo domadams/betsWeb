@@ -25,7 +25,14 @@ const useStyles = makeStyles({
 });
 
 const MatchItem = ({
-  homeImageId, homeTeamName, awayImageId, awayTeamName, kickOffTime,
+                     showFavouriteIcon,
+                     homeImageId,
+                     homeTeamName,
+                     homeTeamScore,
+                     awayImageId,
+                     awayTeamName,
+                     awayTeamScore,
+                     kickOffTime,
 }) => {
   const classes = useStyles();
   const kickOffDate = new Date(parseInt(kickOffTime, 10) * 1000).toLocaleTimeString(
@@ -41,7 +48,7 @@ const MatchItem = ({
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={1} className={classes.marginAuto}>
-            <StarBorderOutlinedIcon />
+            {showFavouriteIcon ? <StarBorderOutlinedIcon /> : null}
           </Grid>
           <Grid item xs={2} className={classes.marginAuto}>
             <Typography variant="subtitle1" className={classes.startTime}>{kickOffDate}</Typography>
@@ -57,8 +64,18 @@ const MatchItem = ({
           <Grid item xs={2} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" />
-                <Typography variant="body2" gutterBottom />
+                {homeTeamScore ?
+                  <Typography variant="body1">
+                    {homeTeamScore}
+                  </Typography>
+                  : null
+                }
+                {awayTeamScore ?
+                  <Typography variant="body1">
+                    {awayTeamScore}
+                  </Typography>
+                  : null
+                }
               </Grid>
             </Grid>
           </Grid>

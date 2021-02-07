@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
+import MatchItem from "../../matchItem";
 
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
@@ -19,25 +20,34 @@ function Live({ fetchInitialData, staticContext }) {
       <ul className="grid">
         {events.results.map((
           {
-            away: { name: awayName },
-            home: { name: homeName },
-
-          }, i,
+            home: {
+              name: homeName,
+              image_id: homeImageId,
+            },
+            away: {
+              name: awayName,
+              image_id: awayImageId,
+            },
+            scores: {
+              2: {
+                home: homeTeamScore,
+                away: awayTeamScore,
+              }
+            },
+            time,
+          },
         ) => (
-          <li key={homeName}>
-            <h2>
-              #
-              {i + 1}
-            </h2>
-            <h3>
-              Home:
-              {homeName}
-            </h3>
-            <h3>
-              Away:
-              {awayName}
-            </h3>
-          </li>
+          <MatchItem
+            showFavouriteIcon={true}
+            homeImageId={homeImageId}
+            homeTeamName={homeName}
+            homeTeamScore={homeTeamScore}
+            awayImageId={awayImageId}
+            awayTeamName={awayName}
+            awayTeamScore={awayTeamScore}
+            kickOffTime={time}
+            key={homeName}
+          />
         ))}
       </ul>
     </>

@@ -1,8 +1,10 @@
 import axios from 'axios';
 import express from 'express';
 import moment from 'moment';
+import apicache from 'apicache'
 
 const router = express.Router();
+const cache = apicache.middleware;
 
 function callApi(url, response, next) {
   axios({
@@ -33,16 +35,14 @@ function callUpcomingEventsByCountry(countryCode) {
   });
 }
 
-router.get('/liveEvents', (req, res, next) => {
+router.get('/liveEvents', cache('60 seconds'), (req, res, next) => {
   callApi('https://api.b365api.com/v1/events/inplay', res, next);
 });
 
-router.get('/upcomingEvents', (req, res, next) => {
+router.get('/upcomingEvents', cache('60 seconds') ,(req, res, next) => {
   Promise.all([
     callUpcomingEventsByCountry('gb'),
     callUpcomingEventsByCountry('de'),
-    callUpcomingEventsByCountry('es'),
-    callUpcomingEventsByCountry('fr'),
   ])
     .then((results) => {
       const mergedResults = [].concat.apply(...results.map((result) => result.data.results));
@@ -85,7 +85,7 @@ router.get('/upcomingEvents', (req, res, next) => {
     }, (error) => next(error));
 });
 
-router.get('/eventResults', (req, res, next) => {
+router.get('/eventResults', cache('60 seconds'), (req, res, next) => {
   callApi('https://api.b365api.com/v2/events/ended', res, next);
 });
 

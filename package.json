@@ -29,6 +29,7 @@
   "dependencies": {
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
+    "apicache": "^1.5.3",
     "axios": "0.21.1",
     "compression": "1.7.4",
     "crypto": "1.0.1",

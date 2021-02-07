@@ -46,6 +46,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                   },
                 ) => (
                   <MatchItem
+                    showFavouriteIcon={true}
                     homeImageId={homeImageId}
                     homeTeamName={homeName}
                     awayImageId={awayImageId}

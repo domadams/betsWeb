@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import loadEvents from '../../helpers/loadEvents';
+import MatchItem from "../../matchItem";
 
 function matchResults({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
@@ -12,28 +13,41 @@ function matchResults({ fetchInitialData, staticContext }) {
   return (
     <>
       <ul className="grid">
-        {events.results.map((
-          {
-            away: { name: awayName },
-            home: { name: homeName },
-
-          }, i,
-        ) => (
-          <li key={homeName}>
-            <h2>
-              #
-              {i + 1}
-            </h2>
-            <h3>
-              Home:
-              {homeName}
-            </h3>
-            <h3>
-              Away:
-              {awayName}
-            </h3>
-          </li>
-        ))}
+        {events.results.map(event => {
+          if(event.ss) {
+            const {
+              home: {
+                name: homeName,
+                image_id: homeImageId,
+              },
+              away: {
+                name: awayName,
+                image_id: awayImageId,
+              },
+              scores: {
+                2: {
+                  home: homeTeamScore = 'N/A',
+                  away: awayTeamScore = 'N/A',
+                }
+              },
+              time,
+            } = event;
+            return (
+              <MatchItem
+                showFavouriteIcon={false}
+                homeImageId={homeImageId}
+                homeTeamName={homeName}
+                homeTeamScore={homeTeamScore}
+                awayImageId={awayImageId}
+                awayTeamName={awayName}
+                awayTeamScore={awayTeamScore}
+                kickOffTime={time}
+                key={homeName}
+              />
+            )
+          }
+          return null
+        })}
       </ul>
     </>
   );

@@ -19,9 +19,14 @@ export default function contentSecurityPolicy(nonce) {
       ].concat(trusted),
       styleSrc: [
         `'nonce-${nonce}'`,
+        'fonts.googleapis.com',
+        'fonts.gstatic.com',
       ].concat(trusted),
       frameSrc: trusted,
-      fontSrc: trusted,
+      fontSrc: [
+        'fonts.googleapis.com',
+        'fonts.gstatic.com',
+      ].concat(trusted),
       imgSrc: [
         'assets.b365api.com',
       ].concat(trusted),
