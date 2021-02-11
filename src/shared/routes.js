@@ -9,7 +9,7 @@ const routes = [
   {
     name: 'In Play',
     path: '/',
-    title: 'BetsWeb - Live Events',
+    title: 'Statosphere.com - Live Events',
     exact: true,
     component: Live,
     fetchInitialData: () => fetchLiveMatches(),
@@ -17,7 +17,7 @@ const routes = [
   {
     name: 'Results',
     path: '/results',
-    title: 'BetsWeb - Results',
+    title: 'Statosphere.com - Results',
     exact: true,
     component: Results,
     fetchInitialData: () => fetchMatchResults(),
@@ -25,7 +25,7 @@ const routes = [
   {
     name: 'Scheduled',
     path: '/upcoming',
-    title: 'BetsWeb - Upcoming Events',
+    title: 'Statosphere.com - Upcoming Events',
     exact: true,
     component: Scheduled,
     fetchInitialData: () => fetchUpcomingMatches(),
@@ -33,11 +33,12 @@ const routes = [
   {
     name: 'Error',
     path: '/error',
-    title: 'BetsWeb - oops something went wrong',
+    title: 'Statosphere.com - oops something went wrong',
     component: Error,
   },
   {
     path: '*',
+    title: 'Statosphere.com - Page not found',
     component: NotFound,
   },
 ];

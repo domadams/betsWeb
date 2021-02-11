@@ -32,7 +32,7 @@ const Error = () => {
             Sorry something went wrong. We will clean up and try again.
           </Typography>
           <Link to="/">
-            <Button variant="contained" color="primary">
+            <Button variant="contained">
               Retun Home
             </Button>
           </Link>

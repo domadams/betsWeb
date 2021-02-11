@@ -14,7 +14,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SideDrawer from '../sideDrawer';
-import HideOnScroll from "../../hideOnScroll";
+import HideOnScroll from "../hideOnScroll";
 import ScrollTop from '../scrollToTop';
 
 const useStyles = makeStyles({
@@ -30,10 +30,9 @@ const useStyles = makeStyles({
   },
   navDisplayTitle: {
     float: 'left',
-    paddingTop: 10,
+    paddingTop: 8,
     fontWeight: 'bold',
-    fontSize: '1.9rem',
-    letterSpacing: 1,
+    fontSize: '1.8rem',
   },
   linkText: {
     textDecoration: 'none',

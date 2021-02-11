@@ -5,6 +5,7 @@ import {
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import PropTypes from 'prop-types';
 import TeamName from '../teamName';
+import ScoreBox from "../scoreBox";
 
 const useStyles = makeStyles({
   root: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
     padding: 10,
     margin: 'auto',
     marginBottom: 10,
+    width: '96%',
   },
   startTime: {
     color: '#be1e26',
@@ -64,18 +66,7 @@ const MatchItem = ({
           <Grid item xs={2} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                {homeTeamScore ?
-                  <Typography variant="body1">
-                    {homeTeamScore}
-                  </Typography>
-                  : null
-                }
-                {awayTeamScore ?
-                  <Typography variant="body1">
-                    {awayTeamScore}
-                  </Typography>
-                  : null
-                }
+                <ScoreBox homeTeamScore={homeTeamScore} awayTeamScore={awayTeamScore}/>
               </Grid>
             </Grid>
           </Grid>

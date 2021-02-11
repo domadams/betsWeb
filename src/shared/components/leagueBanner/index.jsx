@@ -8,10 +8,12 @@ import countries from '../../countries';
 const useStyles = makeStyles({
   leagueBanner: {
     backgroundColor: '#d0e3ec',
+    paddingLeft: 20,
     display: 'flex',
     textTransform: 'uppercase',
     borderTop: '1px solid #999',
     borderBottom: '1px solid #999',
+    marginBottom: 3,
   },
   leagueName: {
     fontWeight: 'bold',
@@ -25,6 +27,11 @@ const LeagueBanner = ({ countryCode, leagueName }) => {
     component: FlagComponent,
   } = countries.find((o) => o.cc === countryCode);
 
+  let league = leagueName.split(name)[1];
+  if(!league || league === '') {
+    league = leagueName
+  }
+
   return (
     <ListItem className={classes.leagueBanner}>
       <ListItemIcon>
@@ -34,7 +41,7 @@ const LeagueBanner = ({ countryCode, leagueName }) => {
         {name}
         :&nbsp;
       </Typography>
-      <Typography className={classes.leagueName}>{leagueName}</Typography>
+      <Typography className={classes.leagueName}>{league}</Typography>
     </ListItem>
   );
 };

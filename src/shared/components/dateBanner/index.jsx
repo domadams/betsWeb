@@ -8,6 +8,7 @@ const useStyles = makeStyles({
   dateBanner: {
     backgroundColor: '#ccc',
     display: 'flex',
+    paddingLeft: 20,
   },
 });
 
