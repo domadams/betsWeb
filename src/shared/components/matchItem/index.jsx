@@ -5,7 +5,7 @@ import {
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import PropTypes from 'prop-types';
 import TeamName from '../teamName';
-import ScoreBox from "../scoreBox";
+import ScoreBox from '../scoreBox';
 
 const useStyles = makeStyles({
   root: {
@@ -27,14 +27,14 @@ const useStyles = makeStyles({
 });
 
 const MatchItem = ({
-                     showFavouriteIcon,
-                     homeImageId,
-                     homeTeamName,
-                     homeTeamScore,
-                     awayImageId,
-                     awayTeamName,
-                     awayTeamScore,
-                     kickOffTime,
+  showFavouriteIcon,
+  homeImageId,
+  homeTeamName,
+  homeTeamScore,
+  awayImageId,
+  awayTeamName,
+  awayTeamScore,
+  kickOffTime,
 }) => {
   const classes = useStyles();
   const kickOffDate = new Date(parseInt(kickOffTime, 10) * 1000).toLocaleTimeString(
@@ -66,7 +66,7 @@ const MatchItem = ({
           <Grid item xs={2} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <ScoreBox homeTeamScore={homeTeamScore} awayTeamScore={awayTeamScore}/>
+                <ScoreBox homeTeamScore={homeTeamScore} awayTeamScore={awayTeamScore} />
               </Grid>
             </Grid>
           </Grid>
@@ -79,9 +79,12 @@ const MatchItem = ({
 MatchItem.propTypes = {
   homeImageId: PropTypes.string.isRequired,
   homeTeamName: PropTypes.string.isRequired,
+  homeTeamScore: PropTypes.string.isRequired,
   awayImageId: PropTypes.string.isRequired,
   awayTeamName: PropTypes.string.isRequired,
+  awayTeamScore: PropTypes.string.isRequired,
   kickOffTime: PropTypes.string.isRequired,
+  showFavouriteIcon: PropTypes.bool.isRequired,
 };
 
 export default MatchItem;

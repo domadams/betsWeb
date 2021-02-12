@@ -1,6 +1,6 @@
 {
   "name": "bets-web",
-  "description": "BetsWeb Website",
+  "description": "Statosphere Website",
   "version": "0.0.3",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/domadams/react-ssr.git"
+    "url": "git+https://github.com/domadams/betsweb.git"
   },
   "keywords": [
     "react",
@@ -29,14 +29,13 @@
   "dependencies": {
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
-    "apicache": "^1.5.3",
+    "apicache": "1.5.3",
     "axios": "0.21.1",
     "compression": "1.7.4",
     "crypto": "1.0.1",
     "express": "4.17.1",
     "helmet": "4.4.1",
     "isomorphic-fetch": "3.0.0",
-    "material-ui-flags": "1.2.4",
     "moment": "2.29.1",
     "pre-compressed-assets": "2.1.1",
     "prop-types": "15.7.2",
@@ -45,6 +44,7 @@
     "react-lazyload": "^3.1.0",
     "react-router-config": "5.1.1",
     "react-router-dom": "5.2.0",
+    "react-world-flags": "^1.4.0",
     "serialize-javascript": "5.0.1",
     "winston": "^3.3.3"
   },

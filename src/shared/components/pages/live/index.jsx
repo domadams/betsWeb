@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
-import LeagueBanner from '../../leagueBanner';
-import MatchItem from "../../matchItem";
+import MatchItem from '../../matchItem';
 
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext);
@@ -14,9 +13,8 @@ function Live({ fetchInitialData, staticContext }) {
 
   return (
     <>
-      <List>
-        <LeagueBanner countryCode="es" leagueName="A League" />
-      </List>
+      <Typography variant="h5">In Play</Typography>
+      <Divider />
       <ul className="grid">
         {events.results.map((
           {
@@ -32,13 +30,13 @@ function Live({ fetchInitialData, staticContext }) {
               2: {
                 home: homeTeamScore,
                 away: awayTeamScore,
-              }
+              },
             },
             time,
           },
         ) => (
           <MatchItem
-            showFavouriteIcon={true}
+            showFavouriteIcon
             homeImageId={homeImageId}
             homeTeamName={homeName}
             homeTeamScore={homeTeamScore}

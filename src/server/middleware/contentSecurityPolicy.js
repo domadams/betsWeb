@@ -29,6 +29,7 @@ export default function contentSecurityPolicy(nonce) {
       ].concat(trusted),
       imgSrc: [
         'assets.b365api.com',
+        'data:',
       ].concat(trusted),
       connectSrc: trusted,
     },

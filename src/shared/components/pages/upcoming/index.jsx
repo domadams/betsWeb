@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List } from '@material-ui/core';
+import { Divider, List, Typography } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
 import DateBanner from '../../dateBanner';
@@ -14,6 +14,8 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
   }
   return (
     <>
+      <Typography variant="h5">Scheduled</Typography>
+      <Divider />
       <List className="grid">
         {events.map((
           {
@@ -46,7 +48,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                   },
                 ) => (
                   <MatchItem
-                    showFavouriteIcon={true}
+                    showFavouriteIcon
                     homeImageId={homeImageId}
                     homeTeamName={homeName}
                     awayImageId={awayImageId}

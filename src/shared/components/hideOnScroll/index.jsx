@@ -1,6 +1,6 @@
-import {Slide, useScrollTrigger} from "@material-ui/core";
-import PropTypes from "prop-types";
-import * as React from "react";
+import { Slide, useScrollTrigger } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 
 const HideOnScroll = (props) => {
   const { children, window } = props;

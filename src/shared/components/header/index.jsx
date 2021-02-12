@@ -14,7 +14,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SideDrawer from '../sideDrawer';
-import HideOnScroll from "../hideOnScroll";
+import HideOnScroll from '../hideOnScroll';
 import ScrollTop from '../scrollToTop';
 
 const useStyles = makeStyles({

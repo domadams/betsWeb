@@ -11,7 +11,7 @@ import Placeholder from '../Placeholder';
 const useStyles = makeStyles({
   clubLogo: {
     paddingRight: 8,
-    marginTop:5,
+    marginTop: 5,
     minWidth: 28,
     maxWidth: 28,
     minHeight: 20,

@@ -1,20 +1,3 @@
-import {
-  IconFlagAU,
-  IconFlagBG,
-  IconFlagBR,
-  IconFlagCA,
-  IconFlagCN,
-  IconFlagDE,
-  IconFlagES,
-  IconFlagFR,
-  IconFlagIN,
-  IconFlagRU,
-  IconFlagTR,
-  IconFlagUK,
-  IconFlagUS,
-  IconFlagUY,
-} from 'material-ui-flags';
-
 const countries = [
   {
     cc: 'ad',
@@ -67,7 +50,6 @@ const countries = [
   {
     cc: 'au',
     name: 'Australia',
-    component: IconFlagAU,
   },
   {
     cc: 'aw',
@@ -104,7 +86,6 @@ const countries = [
   {
     cc: 'bg',
     name: 'Bulgaria',
-    component: IconFlagBG,
   },
   {
     cc: 'bh',
@@ -141,7 +122,6 @@ const countries = [
   {
     cc: 'br',
     name: 'Brazil',
-    component: IconFlagBR,
   },
   {
     cc: 'bs',
@@ -170,7 +150,6 @@ const countries = [
   {
     cc: 'ca',
     name: 'Canada',
-    component: IconFlagCA,
   },
   {
     cc: 'cc',
@@ -211,7 +190,6 @@ const countries = [
   {
     cc: 'cn',
     name: 'China',
-    component: IconFlagCN,
   },
   {
     cc: 'co',
@@ -248,7 +226,6 @@ const countries = [
   {
     cc: 'de',
     name: 'Germany',
-    component: IconFlagDE,
   },
   {
     cc: 'dj',
@@ -293,7 +270,6 @@ const countries = [
   {
     cc: 'es',
     name: 'Spain',
-    component: IconFlagES,
   },
   {
     cc: 'et',
@@ -322,7 +298,6 @@ const countries = [
   {
     cc: 'fr',
     name: 'France',
-    component: IconFlagFR,
   },
   {
     cc: 'ga',
@@ -331,7 +306,6 @@ const countries = [
   {
     cc: 'gb',
     name: 'England',
-    component: IconFlagUK,
   },
   {
     cc: 'gd',
@@ -444,7 +418,6 @@ const countries = [
   {
     cc: 'in',
     name: 'India',
-    component: IconFlagIN,
   },
   {
     cc: 'io',
@@ -789,7 +762,6 @@ const countries = [
   {
     cc: 'ru',
     name: 'Russia',
-    component: IconFlagRU,
   },
   {
     cc: 'rw',
@@ -926,7 +898,6 @@ const countries = [
   {
     cc: 'tr',
     name: 'Turkey',
-    component: IconFlagTR,
   },
   {
     cc: 'tt',
@@ -959,12 +930,10 @@ const countries = [
   {
     cc: 'us',
     name: 'USA',
-    component: IconFlagUS,
   },
   {
     cc: 'uy',
     name: 'Uruguay',
-    component: IconFlagUY,
   },
   {
     cc: 'uz',

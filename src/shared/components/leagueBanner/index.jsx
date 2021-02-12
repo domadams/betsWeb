@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ListItem, ListItemIcon, makeStyles, Typography,
 } from '@material-ui/core';
+import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
 import countries from '../../countries';
 
@@ -22,20 +23,30 @@ const useStyles = makeStyles({
 
 const LeagueBanner = ({ countryCode, leagueName }) => {
   const classes = useStyles();
-  const {
-    name,
-    component: FlagComponent,
-  } = countries.find((o) => o.cc === countryCode);
+  let cc = countryCode;
+  let { name } = countries.find((o) => o.cc === countryCode);
+
+  if (cc === 'gb') {
+    if (leagueName.includes('England')) {
+      cc = 'GB_ENG';
+    } else if (leagueName.includes('Scotland')) {
+      cc = 'GB_SCT';
+      name = 'Scotland';
+    } else if (leagueName.includes('Wales')) {
+      cc = 'GB_WLS';
+      name = 'Wales';
+    }
+  }
 
   let league = leagueName.split(name)[1];
-  if(!league || league === '') {
-    league = leagueName
+  if (!league || league === '') {
+    league = leagueName;
   }
 
   return (
     <ListItem className={classes.leagueBanner}>
       <ListItemIcon>
-        <FlagComponent />
+        <Flag code={cc} height="20" />
       </ListItemIcon>
       <Typography>
         {name}

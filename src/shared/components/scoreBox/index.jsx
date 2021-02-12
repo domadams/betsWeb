@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   score: {
@@ -19,36 +19,39 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'red',
   },
   scoreDraw: {
-    backgroundColor: '#E1Ad01'
-  }
+    backgroundColor: '#E1Ad01',
+  },
 }));
 
-const ScoreBox = ({homeTeamScore, awayTeamScore}) => {
-  if(homeTeamScore && awayTeamScore) {
+const ScoreBox = ({ homeTeamScore, awayTeamScore }) => {
+  if (homeTeamScore && awayTeamScore) {
     const classes = useStyles();
-    const homeScoreInt = parseInt(homeTeamScore);
-    const awayScoreInt = parseInt(awayTeamScore);
+    const homeScoreInt = parseInt(homeTeamScore, 10);
+    const awayScoreInt = parseInt(awayTeamScore, 10);
     let awayScoreClasses = classes.score;
     let homeScoreClasses = classes.score;
 
     switch (true) {
       case (homeScoreInt > awayScoreInt): {
         homeScoreClasses = `${classes.score} ${classes.scoreWinning}`;
-        if(awayTeamScore !== '0') {
-          awayScoreClasses= `${classes.score} ${classes.scoreLosing}`;
+        if (awayTeamScore !== '0') {
+          awayScoreClasses = `${classes.score} ${classes.scoreLosing}`;
         }
         break;
       }
       case (awayScoreInt > homeScoreInt): {
         awayScoreClasses = `${classes.score} ${classes.scoreWinning}`;
-        if(homeTeamScore !== '0') {
-          homeScoreClasses= `${classes.score} ${classes.scoreLosing}`;
+        if (homeTeamScore !== '0') {
+          homeScoreClasses = `${classes.score} ${classes.scoreLosing}`;
         }
         break;
       }
       case ((homeScoreInt === awayScoreInt) && homeScoreInt !== 0): {
         awayScoreClasses = `${classes.score} ${classes.scoreDraw}`;
-        homeScoreClasses= `${classes.score} ${classes.scoreDraw}`;
+        homeScoreClasses = `${classes.score} ${classes.scoreDraw}`;
+        break;
+      }
+      default: {
         break;
       }
     }
