@@ -276,6 +276,10 @@ const countries = [
     name: 'Ethiopia',
   },
   {
+    cc: 'eu',
+    name: 'Europe',
+  },
+  {
     cc: 'fi',
     name: 'Finland',
   },

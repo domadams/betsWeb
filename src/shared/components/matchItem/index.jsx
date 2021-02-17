@@ -14,15 +14,58 @@ const useStyles = makeStyles({
   marginAuto: {
     margin: 'auto',
   },
+  favouriteIcon: {
+    color: '#999',
+    marginTop: 3,
+  },
   paper: {
-    padding: 10,
+    padding: 8,
     margin: 'auto',
     marginBottom: 10,
     width: '96%',
+    backgroundColor: '#fff',
+  },
+  pulseAnimate: {
+    animation: '$pulseUpdate 900ms infinite',
   },
   startTime: {
     color: '#be1e26',
     fontWeight: 'bold',
+  },
+  minuteBlink: {
+    '&::after': {
+      content: '"\'"',
+      display: 'inline-block',
+      animation: '$blink 1s infinite',
+    },
+  },
+  '@keyframes blink': {
+    '0%': {
+      opacity: 1,
+    },
+    '1%': {
+      opacity: 0,
+    },
+    '50%': {
+      opacity: 0,
+    },
+    '51%': {
+      opacity: 1,
+    },
+  },
+  '@keyframes pulseUpdate': {
+    '0%': {
+      transform: 'scale(1)',
+      backgroundColor: '#fff',
+    },
+    '80%': {
+      transform: 'scale(1.03)',
+      backgroundColor: '#006699',
+    },
+    '100%': {
+      transform: 'scale(1)',
+      backgroundColor: '#fff',
+    },
   },
 });
 
@@ -31,42 +74,86 @@ const MatchItem = ({
   homeImageId,
   homeTeamName,
   homeTeamScore,
+  homePosition,
   awayImageId,
   awayTeamName,
   awayTeamScore,
+  awayPosition,
   kickOffTime,
+  flashUpdate,
 }) => {
   const classes = useStyles();
-  const kickOffDate = new Date(parseInt(kickOffTime, 10) * 1000).toLocaleTimeString(
-    'en-GB',
-    {
-      hour: '2-digit',
-      minute: '2-digit',
-    },
-  );
+  const [timeUpdate, setTimeUpdate] = React.useState('inherit');
+  let timeClasses = classes.startTime;
+
+  if (kickOffTime !== 'HT' && kickOffTime !== 'FT' && flashUpdate) {
+    timeClasses = `${classes.startTime} ${classes.minuteBlink}`;
+  }
+
+  if (flashUpdate) {
+    const pulseTimer = React.useRef(null);
+
+    const setPulseUpdate = () => {
+      setTimeUpdate(classes.pulseAnimate);
+      pulseTimer.current = setTimeout(() => {
+        setTimeUpdate('inherit');
+        pulseTimer.current = null;
+      }, 1000);
+    };
+
+    React.useEffect(() => {
+      if (!pulseTimer.current && kickOffTime === '0\'') {
+        setPulseUpdate();
+      }
+    }, [kickOffTime]);
+
+    React.useEffect(() => () => {
+      if (pulseTimer.current) {
+        clearTimeout(pulseTimer.current);
+      }
+    }, []);
+  }
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper className={`${classes.paper} ${timeUpdate}`}>
         <Grid container spacing={2}>
           <Grid item xs={1} className={classes.marginAuto}>
-            {showFavouriteIcon ? <StarBorderOutlinedIcon /> : null}
+            { showFavouriteIcon
+              ? <StarBorderOutlinedIcon className={classes.favouriteIcon} />
+              : null}
           </Grid>
-          <Grid item xs={2} className={classes.marginAuto}>
-            <Typography variant="subtitle1" className={classes.startTime}>{kickOffDate}</Typography>
+          <Grid item xs={2} className={`${classes.marginAuto}`}>
+            <Typography variant="subtitle2" className={timeClasses}>{kickOffTime}</Typography>
           </Grid>
           <Grid item xs={7} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <TeamName logo={homeImageId} name={homeTeamName} />
-                <TeamName logo={awayImageId} name={awayTeamName} />
+                <TeamName
+                  logo={homeImageId}
+                  name={homeTeamName}
+                  score={homeTeamScore}
+                  position={homePosition}
+                  flashUpdate={flashUpdate}
+                />
+                <TeamName
+                  logo={awayImageId}
+                  name={awayTeamName}
+                  score={awayTeamScore}
+                  position={awayPosition}
+                  flashUpdate={flashUpdate}
+                />
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={2} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <ScoreBox homeTeamScore={homeTeamScore} awayTeamScore={awayTeamScore} />
+                <ScoreBox
+                  homeTeamScore={homeTeamScore}
+                  awayTeamScore={awayTeamScore}
+                  flashUpdate={flashUpdate}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -80,11 +167,19 @@ MatchItem.propTypes = {
   homeImageId: PropTypes.string.isRequired,
   homeTeamName: PropTypes.string.isRequired,
   homeTeamScore: PropTypes.string.isRequired,
+  homePosition: PropTypes.string,
   awayImageId: PropTypes.string.isRequired,
   awayTeamName: PropTypes.string.isRequired,
   awayTeamScore: PropTypes.string.isRequired,
+  awayPosition: PropTypes.string,
   kickOffTime: PropTypes.string.isRequired,
   showFavouriteIcon: PropTypes.bool.isRequired,
+  flashUpdate: PropTypes.bool.isRequired,
+};
+
+MatchItem.defaultProps = {
+  awayPosition: null,
+  homePosition: null,
 };
 
 export default MatchItem;

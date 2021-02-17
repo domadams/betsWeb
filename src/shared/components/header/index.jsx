@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -47,7 +47,7 @@ const Header = ({ routes }) => {
   return (
     <>
       <HideOnScroll>
-        <AppBar position="fixed" className={classes.navDisplayBackground}>
+        <AppBar position="fixed">
           <Toolbar>
             <Container maxWidth="md" className={classes.navbarDisplayFlex}>
               <Typography variant="h5" className={classes.navDisplayTitle}>
@@ -92,4 +92,4 @@ Header.propTypes = {
   routes: PropTypes.instanceOf(Array).isRequired,
 };
 
-export default Header;
+export default memo(Header);

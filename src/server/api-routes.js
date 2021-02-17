@@ -2,27 +2,26 @@ import axios from 'axios';
 import express from 'express';
 import moment from 'moment';
 import apicache from 'apicache';
+import { freeLeagues } from '../shared/leagues';
 
 const router = express.Router();
 const cache = apicache.middleware;
 
+const liveEvents = 'https://api.b365api.com/v1/events/inplay';
 const upcomingURL = 'https://api.b365api.com/v2/events/upcoming';
 const resultsURL = 'https://api.b365api.com/v2/events/ended';
 
-function callApi(url, response, next) {
-  axios({
+function callApi(url) {
+  return axios({
     method: 'get',
     url,
-    responseType: 'stream',
     params:
       {
         sport_id: 1,
-        league_id: 94,
+        skip_esports: true,
         token: '',
       },
-  }).then((res) => {
-    res.data.pipe(response);
-  }, (error) => next(error));
+  });
 }
 
 function callApiByCountry(url, countryCode) {
@@ -39,11 +38,49 @@ function callApiByCountry(url, countryCode) {
   });
 }
 
-router.get('/liveEvents', cache('60 seconds'), (req, res, next) => {
-  callApi('https://api.b365api.com/v1/events/inplay', res, next);
+router.get('/liveEvents', cache('20 seconds'), (req, res, next) => {
+  Promise.all([
+    callApi(liveEvents),
+  ])
+    .then((results) => {
+      const mergedResults = [].concat(...results.map((result) => result.data.results));
+      return mergedResults.sort((a, b) => b.time.localeCompare(a.time));
+    })
+    .then((results) => {
+      let currentEvents = [];
+      results.forEach((result) => {
+        if (result.scores) {
+          const league = currentEvents.find((e) => e.leagueName === result.league.name);
+          if (league) {
+            league.liveMatches.push(result);
+          } else {
+            currentEvents.push({
+              leagueName: result.league.name,
+              countryCode: result.league.cc,
+              liveMatches: [
+                result,
+              ],
+            });
+          }
+        }
+      });
+      const sortedResult = [];
+      freeLeagues.forEach((key) => {
+        let found = false;
+        currentEvents = currentEvents.filter((item) => {
+          if (!found && item.leagueName === key) {
+            sortedResult.push(item);
+            found = true;
+            return false;
+          }
+          return true;
+        });
+      });
+      res.json(sortedResult);
+    }, (error) => next(error));
 });
 
-router.get('/upcomingEvents', cache('15 minutes'), (req, res, next) => {
+router.get('/upcomingEvents', cache('30 minutes'), (req, res, next) => {
   Promise.all([
     callApiByCountry(upcomingURL, 'gb'),
     callApiByCountry(upcomingURL, 'it'),

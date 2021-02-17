@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   ListItem, ListItemIcon, makeStyles, Typography,
 } from '@material-ui/core';
@@ -22,39 +22,42 @@ const useStyles = makeStyles({
 });
 
 const LeagueBanner = ({ countryCode, leagueName }) => {
-  const classes = useStyles();
-  let cc = countryCode;
-  let { name } = countries.find((o) => o.cc === countryCode);
+  if (countryCode) {
+    const classes = useStyles();
+    let cc = countryCode;
+    let { name = '' } = countries.find((o) => o.cc === cc) || '';
 
-  if (cc === 'gb') {
-    if (leagueName.includes('England')) {
-      cc = 'GB_ENG';
-    } else if (leagueName.includes('Scotland')) {
-      cc = 'GB_SCT';
-      name = 'Scotland';
-    } else if (leagueName.includes('Wales')) {
-      cc = 'GB_WLS';
-      name = 'Wales';
+    if (cc === 'gb') {
+      if (leagueName.includes('England')) {
+        cc = 'GB_ENG';
+      } else if (leagueName.includes('Scotland')) {
+        cc = 'GB_SCT';
+        name = 'Scotland';
+      } else if (leagueName.includes('Wales')) {
+        cc = 'GB_WLS';
+        name = 'Wales';
+      }
     }
-  }
 
-  let league = leagueName.split(name)[1];
-  if (!league || league === '') {
-    league = leagueName;
-  }
+    let league = leagueName.split(name)[1];
+    if (!league || league === '') {
+      league = leagueName;
+    }
 
-  return (
-    <ListItem className={classes.leagueBanner}>
-      <ListItemIcon>
-        <Flag code={cc} height="20" />
-      </ListItemIcon>
-      <Typography>
-        {name}
-        :&nbsp;
-      </Typography>
-      <Typography className={classes.leagueName}>{league}</Typography>
-    </ListItem>
-  );
+    return (
+      <ListItem className={classes.leagueBanner}>
+        <ListItemIcon>
+          <Flag code={cc} height="20" />
+        </ListItemIcon>
+        <Typography>
+          {name}
+          :&nbsp;
+        </Typography>
+        <Typography className={classes.leagueName}>{league}</Typography>
+      </ListItem>
+    );
+  }
+  return null;
 };
 
 LeagueBanner.propTypes = {
@@ -62,4 +65,4 @@ LeagueBanner.propTypes = {
   leagueName: PropTypes.string.isRequired,
 };
 
-export default LeagueBanner;
+export default memo(LeagueBanner);

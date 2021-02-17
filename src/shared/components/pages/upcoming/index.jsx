@@ -7,7 +7,7 @@ import DateBanner from '../../dateBanner';
 import MatchItem from '../../matchItem';
 
 const Upcoming = ({ fetchInitialData, staticContext }) => {
-  const { loading, events } = loadEvents(fetchInitialData, staticContext);
+  const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
 
   if (loading === true) {
     return <i className="loading">Loading...️</i>;
@@ -34,8 +34,8 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
             ) => (
               <>
                 <LeagueBanner countryCode={countryCode} leagueName={leagueName} key={leagueName} />
-                {upcomingMatches.map((
-                  {
+                {upcomingMatches.map((event) => {
+                  const {
                     home: {
                       name: homeName,
                       image_id: homeImageId,
@@ -45,18 +45,27 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                       image_id: awayImageId,
                     },
                     time,
-                  },
-                ) => (
-                  <MatchItem
-                    showFavouriteIcon
-                    homeImageId={homeImageId}
-                    homeTeamName={homeName}
-                    awayImageId={awayImageId}
-                    awayTeamName={awayName}
-                    kickOffTime={time}
-                    key={homeName}
-                  />
-                ))}
+                  } = event;
+                  const kickOffDate = new Date(parseInt(time, 10) * 1000).toLocaleTimeString(
+                    'en-GB',
+                    {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    },
+                  );
+                  return (
+                    <MatchItem
+                      showFavouriteIcon
+                      homeImageId={homeImageId}
+                      homeTeamName={homeName}
+                      awayImageId={awayImageId}
+                      awayTeamName={awayName}
+                      kickOffTime={kickOffDate}
+                      key={homeName}
+                      flashUpdate={false}
+                    />
+                  );
+                })}
               </>
             ))}
           </>

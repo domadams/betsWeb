@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-function loadEvents(fetchInitialData, staticContext) {
+function loadEvents(fetchInitialData, staticContext, setInterval) {
   const [events, setEvents] = useState(() => {
     if (__isBrowser__) {
       if (window.location.pathname !== document.getElementById('path').value) {
@@ -19,18 +19,29 @@ function loadEvents(fetchInitialData, staticContext) {
     !events,
   );
 
+  const callEvents = () => {
+    fetchInitialData()
+      .then((data) => {
+        setEvents(data);
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (fetchNewEvents.current === true) {
       setLoading(true);
-
-      fetchInitialData()
-        .then((data) => {
-          setEvents(data);
-          setLoading(false);
-        });
+      callEvents();
     } else {
       fetchNewEvents.current = true;
     }
+
+    if (__isBrowser__ && setInterval) {
+      const interval = window.setInterval(() => {
+        callEvents();
+      }, 12000);
+      return () => clearInterval(interval);
+    }
+    return null;
   }, [fetchNewEvents]);
 
   return {

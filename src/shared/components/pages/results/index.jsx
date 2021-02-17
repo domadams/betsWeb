@@ -9,7 +9,7 @@ import DateBanner from '../../dateBanner';
 import LeagueBanner from '../../leagueBanner';
 
 function matchResults({ fetchInitialData, staticContext }) {
-  const { loading, events } = loadEvents(fetchInitialData, staticContext);
+  const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
 
   if (loading === true) {
     return <i className="loading">Loading...️</i>;
@@ -53,7 +53,6 @@ function matchResults({ fetchInitialData, staticContext }) {
                         away: awayTeamScore = 'N/A',
                       },
                     },
-                    time,
                   } = event;
                   return (
                     <MatchItem
@@ -64,8 +63,9 @@ function matchResults({ fetchInitialData, staticContext }) {
                       awayImageId={awayImageId}
                       awayTeamName={awayName}
                       awayTeamScore={awayTeamScore}
-                      kickOffTime={time}
+                      kickOffTime="FT"
                       key={homeName}
+                      flashUpdate={false}
                     />
                   );
                 })}
