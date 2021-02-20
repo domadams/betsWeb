@@ -5,12 +5,13 @@ import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
 import DateBanner from '../../dateBanner';
 import MatchItem from '../../matchItem';
+import Loading from '../../loading';
 
 const Upcoming = ({ fetchInitialData, staticContext }) => {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
 
   if (loading === true) {
-    return <i className="loading">Loading...️</i>;
+    return <Loading />;
   }
   return (
     <>

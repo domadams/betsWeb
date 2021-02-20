@@ -7,12 +7,13 @@ import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
 import DateBanner from '../../dateBanner';
 import LeagueBanner from '../../leagueBanner';
+import Loading from '../../loading';
 
 function matchResults({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
 
   if (loading === true) {
-    return <i className="loading">Loading...️</i>;
+    return <Loading />;
   }
 
   return (

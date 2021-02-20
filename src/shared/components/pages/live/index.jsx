@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Divider, List, Typography } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
+import Loading from '../../loading';
 import LeagueBanner from '../../leagueBanner';
 
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, true);
 
   if (loading === true) {
-    return <i className="loading">Loading...️</i>;
+    return <Loading />;
   }
 
   return (

@@ -117,7 +117,7 @@ const MatchItem = ({
   return (
     <div className={classes.root}>
       <Paper className={`${classes.paper} ${timeUpdate}`}>
-        <Grid container spacing={2}>
+        <Grid container spacing={0}>
           <Grid item xs={1} className={classes.marginAuto}>
             { showFavouriteIcon
               ? <StarBorderOutlinedIcon className={classes.favouriteIcon} />
@@ -126,8 +126,8 @@ const MatchItem = ({
           <Grid item xs={2} className={`${classes.marginAuto}`}>
             <Typography variant="subtitle2" className={timeClasses}>{kickOffTime}</Typography>
           </Grid>
-          <Grid item xs={7} sm container>
-            <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs={8} sm>
+            <Grid item xs direction="column" spacing={1}>
               <Grid item xs>
                 <TeamName
                   logo={homeImageId}
@@ -146,8 +146,8 @@ const MatchItem = ({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={2} sm container>
-            <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs={1}>
+            <Grid item xs direction="column" spacing={0}>
               <Grid item xs>
                 <ScoreBox
                   homeTeamScore={homeTeamScore}

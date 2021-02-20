@@ -1,6 +1,5 @@
 import axios from 'axios';
 import express from 'express';
-import moment from 'moment';
 import apicache from 'apicache';
 import { freeLeagues } from '../shared/leagues';
 
@@ -94,8 +93,14 @@ router.get('/upcomingEvents', cache('30 minutes'), (req, res, next) => {
     })
     .then((results) => {
       const upcomingEvents = [];
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
       results.forEach((result) => {
-        const resultDate = moment.unix(parseInt(result.time, 10)).format('dddd, MMMM Do, YYYY');
+        const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
         const upcomingDate = upcomingEvents.find((event) => event.date === resultDate);
         if (upcomingDate) {
           const league = upcomingDate.matches.find((evt) => evt.leagueName === result.league.name);
@@ -144,9 +149,15 @@ router.get('/eventResults', cache('15 minutes'), (req, res, next) => {
     .then((results) => {
       const matchResults = [];
       const now = Date.now();
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
       results.forEach((result) => {
-        const resultDate = moment.unix(parseInt(result.time, 10)).format('dddd, MMMM Do, YYYY');
-        if (moment.unix(parseInt(result.time, 10)).isBefore(now)) {
+        const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
+        if (new Date(parseInt(result.time * 1000, 10)).valueOf() < now.valueOf()) {
           const upcomingDate = matchResults.find((event) => event.date === resultDate);
           if (upcomingDate && result.scores) {
             const league = upcomingDate.matches.find((e) => e.leagueName === result.league.name);
