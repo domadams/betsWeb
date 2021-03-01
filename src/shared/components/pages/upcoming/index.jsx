@@ -6,6 +6,7 @@ import LeagueBanner from '../../leagueBanner';
 import DateBanner from '../../dateBanner';
 import MatchItem from '../../matchItem';
 import Loading from '../../loading';
+import { kickOffTime } from '../../helpers/matchTime';
 
 const Upcoming = ({ fetchInitialData, staticContext }) => {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
@@ -37,6 +38,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                 <LeagueBanner countryCode={countryCode} leagueName={leagueName} key={leagueName} />
                 {upcomingMatches.map((event) => {
                   const {
+                    id,
                     home: {
                       name: homeName,
                       image_id: homeImageId,
@@ -47,22 +49,18 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                     },
                     time,
                   } = event;
-                  const kickOffDate = new Date(parseInt(time, 10) * 1000).toLocaleTimeString(
-                    'en-GB',
-                    {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    },
-                  );
+                  const kickOffDate = kickOffTime(time);
+
                   return (
                     <MatchItem
+                      eventId={id}
                       showFavouriteIcon
                       homeImageId={homeImageId}
                       homeTeamName={homeName}
                       awayImageId={awayImageId}
                       awayTeamName={awayName}
                       kickOffTime={kickOffDate}
-                      key={homeName}
+                      key={id}
                       flashUpdate={false}
                     />
                   );

@@ -40,6 +40,7 @@ function matchResults({ fetchInitialData, staticContext }) {
                 <LeagueBanner countryCode={countryCode} leagueName={leagueName} key={leagueName} />
                 {endedMatches.map((event) => {
                   const {
+                    id,
                     home: {
                       name: homeName,
                       image_id: homeImageId,
@@ -57,6 +58,7 @@ function matchResults({ fetchInitialData, staticContext }) {
                   } = event;
                   return (
                     <MatchItem
+                      eventId={id}
                       showFavouriteIcon={false}
                       homeImageId={homeImageId}
                       homeTeamName={homeName}
@@ -65,7 +67,7 @@ function matchResults({ fetchInitialData, staticContext }) {
                       awayTeamName={awayName}
                       awayTeamScore={awayTeamScore}
                       kickOffTime="FT"
-                      key={homeName}
+                      key={id}
                       flashUpdate={false}
                     />
                   );

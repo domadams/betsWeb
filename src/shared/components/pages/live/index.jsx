@@ -5,12 +5,17 @@ import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
 import Loading from '../../loading';
 import LeagueBanner from '../../leagueBanner';
+import { minuteTime } from '../../helpers/matchTime';
 
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, true);
 
   if (loading === true) {
     return <Loading />;
+  }
+
+  if (!events) {
+    loadEvents(fetchInitialData, staticContext, true);
   }
 
   return (
@@ -29,6 +34,7 @@ function Live({ fetchInitialData, staticContext }) {
             <LeagueBanner countryCode={countryCode} leagueName={leagueName} key={leagueName} />
             {liveMatches.map((event) => {
               const {
+                id,
                 home: {
                   name: homeName,
                   image_id: homeImageId,
@@ -48,27 +54,17 @@ function Live({ fetchInitialData, staticContext }) {
                   away_pos: awayPosition,
                 } = {},
                 timer: {
+                  tm,
                   md,
                   ts,
                 },
               } = event;
 
-              let {
-                timer: {
-                  tm: time,
-                },
-              } = event;
-              if (time > 45 && md === 0) {
-                time = `45(+${time - 45})`;
-              } else if (time === 45 && ts === 0 && md === 1) {
-                time = 'HT';
-              } else if (time > 90) {
-                time = `90(+${time - 90})`;
-              } else {
-                time = `${time}`;
-              }
+              const time = minuteTime(tm, ts, md);
+
               return (
                 <MatchItem
+                  eventId={id}
                   showFavouriteIcon
                   homeImageId={homeImageId}
                   homeTeamName={homeName}
@@ -80,7 +76,7 @@ function Live({ fetchInitialData, staticContext }) {
                   awayPosition={awayPosition}
                   kickOffTime={time}
                   flashUpdate
-                  key={homeName}
+                  key={id}
                 />
               );
             })}

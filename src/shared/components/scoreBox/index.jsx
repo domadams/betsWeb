@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   score: {
     backgroundColor: '#888',
     width: 25,
@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
       opacity: 1,
     },
   },
-}));
+});
 
 const ScoreBox = ({ homeTeamScore, awayTeamScore, flashUpdate }) => {
   if (homeTeamScore && awayTeamScore) {

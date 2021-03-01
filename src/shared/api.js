@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import querystring from 'querystring';
 
 let basePath = 'http://0.0.0.0:8080';
 
@@ -16,7 +17,6 @@ export function fetchLiveMatches() {
 
   return fetch(encodedURI)
     .then((data) => data.json())
-    .then((data) => data)
     .catch(() => null);
 }
 
@@ -25,7 +25,6 @@ export function fetchUpcomingMatches() {
 
   return fetch(encodedURI)
     .then((data) => data.json())
-    .then((data) => data)
     .catch(() => null);
 }
 
@@ -34,6 +33,12 @@ export function fetchMatchResults() {
 
   return fetch(encodedURI)
     .then((data) => data.json())
-    .then((data) => data)
+    .catch(() => null);
+}
+
+export function fetchFavourites(favourites) {
+  const encodedURI = encodeURI(`${basePath}/api/favourites?${querystring.stringify({ favourites: JSON.stringify(favourites) })}`);
+  return fetch(encodedURI)
+    .then((data) => data.json())
     .catch(() => null);
 }

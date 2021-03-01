@@ -1,9 +1,12 @@
 import Live from './components/pages/live';
 import Results from './components/pages/results';
 import Scheduled from './components/pages/upcoming';
+import FavouritesPage from './components/pages/favourites';
 import Error from './components/pages/error';
 import NotFound from './components/pages/notFound';
-import { fetchLiveMatches, fetchUpcomingMatches, fetchMatchResults } from './api';
+import {
+  fetchLiveMatches, fetchUpcomingMatches, fetchMatchResults, fetchFavourites,
+} from './api';
 
 const routes = [
   {
@@ -29,6 +32,14 @@ const routes = [
     exact: true,
     component: Scheduled,
     fetchInitialData: () => fetchUpcomingMatches(),
+  },
+  {
+    name: 'Favourites',
+    path: '/favourites',
+    title: 'Statosphere.com - Favourites',
+    exact: true,
+    component: FavouritesPage,
+    fetchInitialData: (favourites) => fetchFavourites(favourites),
   },
   {
     name: 'Error',

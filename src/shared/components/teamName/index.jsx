@@ -7,7 +7,6 @@ import {
 import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types';
 import Placeholder from '../Placeholder';
-import footballIcon from './footballIcon.png';
 
 const useStyles = makeStyles({
   clubLogo: {
@@ -94,6 +93,8 @@ const TeamName = ({
                 src={`https://assets.b365api.com/images/team/m/${logo}.png`}
                 alt={`${name} logo`}
                 className={classes.clubLogo}
+                width={28}
+                height={20}
               />
             )
             : <Placeholder />}
@@ -115,7 +116,16 @@ const TeamName = ({
           }
           {
             flashUpdate
-              ? <img src={footballIcon} alt="Football Icon" className={`${classes.footballIcon} ${scoreUpdate}`} />
+              ? (
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAyCAMAAAAtFKi+AAAAsVBMVEUAAAAAAAAAAAAAAAA0NDQAAAAAAAAAAAAPDw8AAAAAAAABAQEJCQkXFxcFBQUAAAAAAAABAQEEBAQAAAABAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEEBAQAAAAAAAAAAAAAAAABAQEDAwMCAgIAAAAAAAABAQEBAQECAgICAgIBAQEBAQEBAQEEBAQAAAAAAAABAQEAAAABAQEBAQEFBQUAAAABAQEBAQECAgIBAQFff7JHAAAAO3RSTlMA/vrqAubf7gj2lTkMBRDZfG8bnEfVicO78s21YR/JpeOOMygl0alqXC0iZlhPErCggplAdBetVYY/QnnxgZAAAANaSURBVEjHvVbXlpswEJWQJTCY3sGmGVxwb1vy/x8WgSmSs8nmISf3CaQ7mnY1AP4VJpO/pkq1s/bsNLW9tVNL3x68vcdkCjtMyclcTv5EV+yMEMghs5XfmpQyTsyyXifCyEeej+Xy6+P3rr4+AoqHgWk4ISK6S0RHW7vu+xdOZhd0Lnvblb47KNvaepQntwDlGV1mr3zNRuZQEss1+seFn5RAMtFVeznfxvvx7YCV4XlbBRYAe2xzPlRPZPjA9pnzFH1F396RpzKM+dSmabERMXCwTE83xTkY3RJRAXxELDboogL1SraDGM7wjdXA1X+piYnuGrCqtCc5obBhtpe6AXiotuCvH3vkdA7eYLYc6UYV/gAvsCEUEjM5PV0oIgxPSpdNTuje+cjzF3orRdRl6sHT3sfegm5cOuXJfBLzXlxe2+MkK8DR1N3dvIIdhAtbdCnu15OmP4VotLHLIiPScN2Ru5g7tDHN8TNj9QQZiJtWhdJxsf1Mx+WmeXmkPSWa8hfH3BnyKogIxuG46jVSjtW+dhyQHgVpblCdz8VhMZ0AKTiDJ3KOT35YmjR5+h53YgnMfLkzuHMGBtuHqF8NZozBRmD47oKT33QwYEK6MckJd/5+vT1LJ8YSk3TNDJjIAhxuiB7iH4IVzcqLtC5SMjrYvep1BSPzOIs8pnHgggI97EI9Ah5HP6Y+l1nTuAK9t2uf2JCsm3kNdBHK4AU79Amai1204mu3tcA/PhO0ipwUPN+q7CZROWmj/8BOew2dYf+RpCpnYGRFOxy8TozZZrIlOTM39ujADV09b68FUp5yX8FQjrlCzk4+m7ZHyiZovx8VDhXXdA9YKNhkplBmtA6GoNXmjs8Bh1wvh7F+rRrvdXVWx8HyS29rV+6Pc/C6CdzWt4y4aMM+AIc13ii3w/wux1n1aKu4YTt/EeAQYS+UqSiGrUpdq6nbh8rJURZgwinaEKDwBAxvYIOvL+NToxar4iENIxtBoQe8m0jWwAtmhgiRG8ims9QmoI5GvgAxNmZffBQPFcRx4GISvX3ELX9KQfmwOnz95a3zLDJuyruRJrRqgwH26t9/2K+EpLtiYTkppvzGRs+LP/4LLM2YYN2PTzr1IbqrXQm+g7pof07O8mV3W6jg/+Mnbu5D/CxcWV8AAAAASUVORK5CYII="
+                  alt="Football Icon"
+                  className={`${classes.footballIcon} 
+                ${scoreUpdate}`}
+                  height={20}
+                  width={20}
+                />
+              )
               : null
           }
         </Typography>

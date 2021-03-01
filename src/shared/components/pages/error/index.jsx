@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import broken from './broken.jpg';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   errorLayout: {
     textAlign: 'center',
     marginTop: 10,
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   pageMessage: {
     padding: 10,
   },
-}));
+});
 
 const Error = () => {
   const classes = useStyles();

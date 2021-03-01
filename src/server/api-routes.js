@@ -9,6 +9,7 @@ const cache = apicache.middleware;
 const liveEvents = 'https://api.b365api.com/v1/events/inplay';
 const upcomingURL = 'https://api.b365api.com/v2/events/upcoming';
 const resultsURL = 'https://api.b365api.com/v2/events/ended';
+const eventView = 'https://api.b365api.com/v1/event/view';
 
 function callApi(url) {
   return axios({
@@ -18,7 +19,19 @@ function callApi(url) {
       {
         sport_id: 1,
         skip_esports: true,
-        token: '',
+        token: '71705-bVomi4R8vMvyBY',
+      },
+  });
+}
+
+function callEventApi(url, eventId) {
+  return axios({
+    method: 'get',
+    url,
+    params:
+      {
+        event_id: eventId,
+        token: '71705-bVomi4R8vMvyBY',
       },
   });
 }
@@ -31,7 +44,7 @@ function callApiByCountry(url, countryCode) {
       {
         sport_id: 1,
         cc: countryCode,
-        token: '',
+        token: '71705-bVomi4R8vMvyBY',
         skip_esports: true,
       },
   });
@@ -190,6 +203,25 @@ router.get('/eventResults', cache('15 minutes'), (req, res, next) => {
       });
       res.json(matchResults);
     }, (error) => next(error));
+});
+
+router.get('/favourites', (req, res, next) => {
+  const favourites = JSON.parse(decodeURIComponent(req.query.favourites) || []);
+  const promises = [];
+
+  favourites.forEach((favourite) => {
+    promises.push(callEventApi(eventView, favourite));
+  });
+
+  if (favourites && favourites.length > 0) {
+    Promise.all(promises)
+      .then((results) => {
+        const mergedResults = [].concat(...results.map((result) => result.data.results));
+        res.json(mergedResults);
+      });
+  } else {
+    res.json([]);
+  }
 });
 
 export default router;

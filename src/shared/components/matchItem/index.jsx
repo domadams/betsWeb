@@ -2,8 +2,8 @@ import React from 'react';
 import {
   Grid, Paper, makeStyles, Typography,
 } from '@material-ui/core';
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import PropTypes from 'prop-types';
+import Favourite from '../favourite';
 import TeamName from '../teamName';
 import ScoreBox from '../scoreBox';
 
@@ -13,10 +13,6 @@ const useStyles = makeStyles({
   },
   marginAuto: {
     margin: 'auto',
-  },
-  favouriteIcon: {
-    color: '#999',
-    marginTop: 3,
   },
   paper: {
     padding: 8,
@@ -70,6 +66,7 @@ const useStyles = makeStyles({
 });
 
 const MatchItem = ({
+  eventId,
   showFavouriteIcon,
   homeImageId,
   homeTeamName,
@@ -120,7 +117,7 @@ const MatchItem = ({
         <Grid container spacing={0}>
           <Grid item xs={1} className={classes.marginAuto}>
             { showFavouriteIcon
-              ? <StarBorderOutlinedIcon className={classes.favouriteIcon} />
+              ? <Favourite eventId={eventId} />
               : null}
           </Grid>
           <Grid item xs={2} className={`${classes.marginAuto}`}>
@@ -164,6 +161,7 @@ const MatchItem = ({
 };
 
 MatchItem.propTypes = {
+  eventId: PropTypes.string.isRequired,
   homeImageId: PropTypes.string.isRequired,
   homeTeamName: PropTypes.string.isRequired,
   homeTeamScore: PropTypes.string.isRequired,

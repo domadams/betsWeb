@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-function loadEvents(fetchInitialData, staticContext, setInterval) {
+function loadEvents(fetchInitialData, staticContext, setInterval, params = null) {
   const [events, setEvents] = useState(() => {
     if (__isBrowser__) {
       if (window.location.pathname !== document.getElementById('path').value) {
@@ -20,7 +20,7 @@ function loadEvents(fetchInitialData, staticContext, setInterval) {
   );
 
   const callEvents = () => {
-    fetchInitialData()
+    fetchInitialData(params)
       .then((data) => {
         setEvents(data);
         setLoading(false);
