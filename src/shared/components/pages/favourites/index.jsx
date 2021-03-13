@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 import {
   Divider,
-  List, makeStyles, Paper,
+  List,
+  makeStyles,
+  Paper,
   Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -18,6 +20,10 @@ const useStyles = makeStyles({
     flexGrow: 1,
     margin: 'auto',
   },
+  pageHeader: {
+    paddingLeft: 10,
+    margin: '5px 0',
+  },
   paper: {
     padding: 8,
     margin: 'auto',
@@ -25,6 +31,12 @@ const useStyles = makeStyles({
     marginBottom: 10,
     width: '96%',
     backgroundColor: '#eee',
+  },
+  favouriteHeader: {
+    background: 'gainsboro',
+    border: '1px solid #999',
+    marginBottom: 2,
+    paddingLeft: 20,
   },
 });
 
@@ -44,79 +56,99 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
 
     return (
       <>
-        <Typography variant="h5">Favourites</Typography>
+        <Typography variant="h5" className={classes.pageHeader}>Favourites</Typography>
         <Divider />
         {(events && events.length > 0)
           ? (
             <List className="grid">
-              {events.map((event) => {
-                const hasFavourite = favourites
-                  ? favourites.find((match) => match === event.id)
-                  : null;
-                if (hasFavourite) {
-                  const {
-                    id,
-                    home: {
-                      name: homeName,
-                      image_id: homeImageId,
-                    },
-                    away: {
-                      name: awayName,
-                      image_id: awayImageId,
-                    },
-                    time,
-                    time_status: timeStatus,
-                    ss,
-                    scores: {
-                      2: {
-                        home: homeTeamScore = '',
-                        away: awayTeamScore = '',
-                      } = {},
-                    } = {},
-                    extra: {
-                      home_pos: homePosition,
-                      away_pos: awayPosition,
-                    } = {},
-                    timer: {
-                      md = 1,
-                      ts = 0,
-                    } = {},
-                  } = event;
+              {events.map((
+                {
+                  label,
+                  matches,
+                },
+              ) => (
+                <>
+                  {(matches && matches.length > 0)
+                    ?
+                    (
+                      <>
+                        <div className={classes.favouriteHeader}>
+                          <Typography variant="h6">{label}</Typography>
+                        </div>
+                        {matches.map((event) => {
+                          const hasFavourite = favourites
+                            ? favourites.find((match) => match === event.id)
+                            : null;
+                          if (hasFavourite) {
+                            const {
+                              id,
+                              home: {
+                                name: homeName,
+                                image_id: homeImageId,
+                              },
+                              away: {
+                                name: awayName,
+                                image_id: awayImageId,
+                              },
+                              time,
+                              time_status: timeStatus,
+                              ss,
+                              scores: {
+                                2: {
+                                  home: homeTeamScore = '',
+                                  away: awayTeamScore = '',
+                                } = {},
+                              } = {},
+                              extra: {
+                                home_pos: homePosition,
+                                away_pos: awayPosition,
+                              } = {},
+                              timer: {
+                                md = 1,
+                                ts = 0,
+                              } = {},
+                            } = event;
 
-                  let {
-                    timer: {
-                      tm = 'FT',
-                    } = {},
-                  } = event;
-                  let flashUpdate = true;
+                            let {
+                              timer: {
+                                tm = 'FT',
+                              } = {},
+                            } = event;
+                            let flashUpdate = true;
 
-                  if (timeStatus === '0' || !ss) {
-                    flashUpdate = false;
-                    tm = kickOffTime(time);
-                  } else if (timeStatus === '1') {
-                    tm = minuteTime(tm, ts, md);
+                            if (timeStatus === '0' || !ss) {
+                              flashUpdate = false;
+                              tm = kickOffTime(time);
+                            } else if (timeStatus === '1') {
+                              tm = minuteTime(tm, ts, md);
+                            }
+
+                            return (
+                              <MatchItem
+                                eventId={id}
+                                showFavouriteIcon
+                                homeImageId={homeImageId}
+                                homeTeamName={homeName}
+                                homeTeamScore={homeTeamScore}
+                                homePosition={homePosition}
+                                awayImageId={awayImageId}
+                                awayTeamName={awayName}
+                                awayTeamScore={awayTeamScore}
+                                awayPosition={awayPosition}
+                                kickOffTime={tm}
+                                flashUpdate={flashUpdate}
+                                key={homeName}
+                              />
+                            );
+                          }
+                          return null;
+                        })}
+                      </>
+                    )
+                    : null
                   }
-
-                  return (
-                    <MatchItem
-                      eventId={id}
-                      showFavouriteIcon
-                      homeImageId={homeImageId}
-                      homeTeamName={homeName}
-                      homeTeamScore={homeTeamScore}
-                      homePosition={homePosition}
-                      awayImageId={awayImageId}
-                      awayTeamName={awayName}
-                      awayTeamScore={awayTeamScore}
-                      awayPosition={awayPosition}
-                      kickOffTime={tm}
-                      flashUpdate={flashUpdate}
-                      key={homeName}
-                    />
-                  );
-                }
-                return null;
-              })}
+                </>
+              ))}
             </List>
           )
           : (

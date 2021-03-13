@@ -1,14 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, List, Typography } from '@material-ui/core';
+import {Divider, List, makeStyles, Typography} from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
 import Loading from '../../loading';
 import LeagueBanner from '../../leagueBanner';
 import { minuteTime } from '../../helpers/matchTime';
 
+const useStyles = makeStyles({
+  pageHeader: {
+    paddingLeft: 10,
+    margin: '5px 0',
+  },
+});
+
 function Live({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, true);
+  const classes = useStyles();
 
   if (loading === true) {
     return <Loading />;
@@ -20,7 +28,7 @@ function Live({ fetchInitialData, staticContext }) {
 
   return (
     <>
-      <Typography variant="h5">In Play</Typography>
+      <Typography variant="h5" className={classes.pageHeader}>In Play</Typography>
       <Divider />
       <List className="grid">
         {events.map((

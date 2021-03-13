@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, List, Typography } from '@material-ui/core';
+import {Divider, List, makeStyles, Typography} from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
 import DateBanner from '../../dateBanner';
@@ -8,8 +8,16 @@ import MatchItem from '../../matchItem';
 import Loading from '../../loading';
 import { kickOffTime } from '../../helpers/matchTime';
 
+const useStyles = makeStyles({
+  pageHeader: {
+    paddingLeft: 10,
+    margin: '5px 0',
+  },
+});
+
 const Upcoming = ({ fetchInitialData, staticContext }) => {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
+  const classes = useStyles();
 
   if (loading === true) {
     return <Loading />;
@@ -21,7 +29,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
 
   return (
     <>
-      <Typography variant="h5">Scheduled</Typography>
+      <Typography variant="h5" className={classes.pageHeader}>Scheduled</Typography>
       <Divider />
       <List className="grid">
         {events.map((

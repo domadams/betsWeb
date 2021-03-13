@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Divider, List, Typography,
+  Divider, List, makeStyles, Typography,
 } from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
@@ -9,8 +9,16 @@ import DateBanner from '../../dateBanner';
 import LeagueBanner from '../../leagueBanner';
 import Loading from '../../loading';
 
+const useStyles = makeStyles({
+  pageHeader: {
+    paddingLeft: 10,
+    margin: '5px 0',
+  },
+});
+
 function matchResults({ fetchInitialData, staticContext }) {
   const { loading, events } = loadEvents(fetchInitialData, staticContext, false);
+  const classes = useStyles();
 
   if (loading === true) {
     return <Loading />;
@@ -22,7 +30,7 @@ function matchResults({ fetchInitialData, staticContext }) {
 
   return (
     <>
-      <Typography variant="h5">Results</Typography>
+      <Typography variant="h5" className={classes.pageHeader}>Results</Typography>
       <Divider />
       <List className="grid">
         {events.map((

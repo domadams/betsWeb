@@ -91,6 +91,7 @@ const TeamName = ({
         <LazyLoad
           height={20}
           offset={450}
+          once={true}
           placeholder={<Placeholder />}
         >
           {logo

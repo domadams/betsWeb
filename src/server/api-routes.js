@@ -4,6 +4,7 @@ import apicache from 'apicache';
 import getDate from './utils/getDate';
 import { freeLeagues } from '../shared/leagues';
 import countries from '../shared/countries';
+import favouritesOrder from '../shared/favouritesOrder';
 
 const router = express.Router();
 const cache = apicache.middleware;
@@ -103,10 +104,8 @@ router.get('/upcomingEvents', cache('30 minutes'), (req, res, next) => {
     if (country.component && !country.exclude) {
       promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 1));
       promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 2));
-      promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 3));
       promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 1));
       promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 2));
-      promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 3));
     }
   });
 
@@ -184,10 +183,8 @@ router.get('/eventResults', cache('15 minutes'), (req, res, next) => {
     if (country.component && !country.exclude) {
       promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 1));
       promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 2));
-      promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 3));
       promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 1));
       promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 2));
-      promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 3));
     }
   });
 
@@ -268,8 +265,28 @@ router.get('/favourites', (req, res, next) => {
   if (favourites && favourites.length > 0) {
     Promise.all(promises)
       .then((results) => {
-        const mergedResults = [].concat(...results.map((result) => result.data.results));
-        res.json(mergedResults);
+        let mergedResults = [].concat(...results.map((result) => result.data.results));
+        const sortedResults = [];
+
+        favouritesOrder.forEach((key) => {
+          const events = [];
+          mergedResults = mergedResults.filter((item) => {
+            if (item.time_status === key.time_status) {
+              events.push(item);
+              return false;
+            }
+            return true;
+          });
+          events.sort((a, b) => {
+            b.time.localeCompare(a.time)
+          })
+          sortedResults.push({
+            label: key.label,
+            matches: events
+          })
+        });
+
+        res.json(sortedResults);
       });
   } else {
     res.json([]);
