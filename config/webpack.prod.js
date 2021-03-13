@@ -1,26 +1,14 @@
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const zopfli = require('@gfx/zopfli');
 const zlib = require('zlib');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { clientConfig, serverConfig } = require('./webpack.common.js');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const prodConfig = {
   mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader' },
-        ],
-      },
-    ],
-  },
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -28,19 +16,14 @@ const prodConfig = {
     },
     minimize: true,
     minimizer: [
-      new CssMinimizerPlugin(),
       new TerserPlugin(),
     ],
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     // Remove all files inside webpack's dist directory,
     // as well as all unused webpack assets after every successful rebuild.
     new CleanWebpackPlugin(),
-    // Extracts CSS into separate files
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
     new CompressionPlugin({
       test: /\.js(\?.*)?$/i,
       compressionOptions: {
@@ -66,5 +49,5 @@ const prodConfig = {
   ],
 };
 
-// Merge webpack.common config with webpack.dev
+// Merge webpack.common config with webpack.prod
 module.exports = [merge(clientConfig, prodConfig), serverConfig];

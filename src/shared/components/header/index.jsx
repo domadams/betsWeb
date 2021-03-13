@@ -30,8 +30,8 @@ const useStyles = makeStyles({
   },
   navDisplayTitle: {
     float: 'left',
-    paddingTop: 8,
-    fontWeight: 'bold',
+    paddingTop: 9,
+    fontWeight: 600,
     fontSize: '1.8rem',
   },
   linkText: {
@@ -73,6 +73,7 @@ const Header = ({ routes }) => {
                 </List>
               </Hidden>
               <Hidden mdUp>
+
                 <SideDrawer navLinks={routes} />
               </Hidden>
             </Container>

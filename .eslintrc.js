@@ -4,10 +4,13 @@ module.exports = {
     browser: true,
     jest: true,
   },
+  parser: 'babel-eslint',
   globals: {
     __isBrowser__: true,
   },
   rules: {
+    'import/no-named-as-default': 0,
+    'import/no-named-as-default-member': 0,
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': ['error', { allow: ['__INITIAL_DATA__'] }],
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
@@ -17,6 +20,13 @@ module.exports = {
       specialLink: ['to'],
       aspects: ['noHref', 'invalidHref', 'preferButton'],
     }],
+    camelcase: ['error',
+      {
+        allow: ['FlagGB_EN', 'FlagGB_SCT', 'FlagGB_WLS'],
+        properties: 'never',
+      },
+    ],
+    'no-param-reassign': [2, { props: false }],
     'new-cap': ['error', {
       newIsCapExceptions: ['createLogger'],
       capIsNewExceptions: ['Router'],

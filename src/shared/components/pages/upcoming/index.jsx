@@ -14,6 +14,11 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
   if (loading === true) {
     return <Loading />;
   }
+
+  if (!events) {
+    loadEvents(fetchInitialData, staticContext, true);
+  }
+
   return (
     <>
       <Typography variant="h5">Scheduled</Typography>

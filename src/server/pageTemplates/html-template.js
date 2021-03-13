@@ -19,10 +19,29 @@ const htmlTemplate = (title, content, data, path, nonce, css) => (
                 <meta name="description" content="What is this here to do?">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
                 <meta property="csp-nonce" content="${nonce}">
-                <style nonce="${nonce}" id="jss-server-side">${css}</style>
-                <link rel="preconnect" href="https://assets.b365api.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com">
-                <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
+                <link rel="preconnect" href="https://assets.b365api.com">
+                <style nonce="${nonce}">
+                    /* latin */
+                    @font-face {
+                      font-family: 'Titillium Web';
+                      font-style: normal;
+                      font-weight: 400;
+                      font-display: swap;
+                      src: url(https://fonts.gstatic.com/s/titilliumweb/v9/NaPecZTIAOhVxoMyOr9n_E7fdMPmDaZRbrw.woff2) format('woff2');
+                      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                    }
+                    /* latin */
+                   @font-face {
+                      font-family: 'Titillium Web';
+                      font-style: normal;
+                      font-weight: 600;
+                      font-display: swap;
+                      src: url(https://fonts.gstatic.com/s/titilliumweb/v9/NaPDcZTIAOhVxoMyOr9n_E7ffBzCGItzY5abuWI.woff2) format('woff2');
+                      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                  }
+                </style>
+                <style nonce="${nonce}" id="jss-server-side">${css}</style>
                 <title>${title}</title>
             </head>
             <body>

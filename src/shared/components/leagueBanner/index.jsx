@@ -1,9 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, Suspense } from 'react';
 import {
   ListItem, ListItemIcon, makeStyles, Typography,
 } from '@material-ui/core';
-import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
+
 import countries from '../../countries';
 
 const useStyles = makeStyles({
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     marginBottom: 3,
   },
   leagueName: {
-    fontWeight: 'bold',
+    fontWeight: 600,
   },
 });
 
@@ -25,20 +25,16 @@ const LeagueBanner = ({ countryCode, leagueName }) => {
   if (countryCode) {
     const classes = useStyles();
     let cc = countryCode;
-    let { name = '' } = countries.find((o) => o.cc === cc) || '';
-
     if (cc === 'gb') {
       if (leagueName.includes('England')) {
-        cc = 'GB_ENG';
+        cc = 'gb_en';
       } else if (leagueName.includes('Scotland')) {
-        cc = 'GB_SCT';
-        name = 'Scotland';
+        cc = 'gb_sct';
       } else if (leagueName.includes('Wales')) {
-        cc = 'GB_WLS';
-        name = 'Wales';
+        cc = 'gb_wls';
       }
     }
-
+    const { name = '', component: Flag = null } = countries.find((o) => o.cc === cc);
     let league = leagueName.split(name)[1];
     if (!league || league === '') {
       league = leagueName;
@@ -47,7 +43,11 @@ const LeagueBanner = ({ countryCode, leagueName }) => {
     return (
       <ListItem className={classes.leagueBanner}>
         <ListItemIcon>
-          <Flag code={cc} height="20" />
+          <Suspense fallback={<></>}>
+            {Flag
+              ? <Flag width={30} height={20} />
+              : <></>}
+          </Suspense>
         </ListItemIcon>
         <Typography>
           {name}

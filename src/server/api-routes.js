@@ -1,7 +1,9 @@
 import axios from 'axios';
 import express from 'express';
 import apicache from 'apicache';
+import getDate from './utils/getDate';
 import { freeLeagues } from '../shared/leagues';
+import countries from '../shared/countries';
 
 const router = express.Router();
 const cache = apicache.middleware;
@@ -19,7 +21,23 @@ function callApi(url) {
       {
         sport_id: 1,
         skip_esports: true,
-        token: '71705-bVomi4R8vMvyBY',
+        token: '',
+      },
+  });
+}
+
+function callApiByDateAndCountry(url, date, countryCode, page) {
+  return axios({
+    method: 'get',
+    url,
+    params:
+      {
+        sport_id: 1,
+        skip_esports: true,
+        token: '',
+        day: date,
+        cc: countryCode,
+        page,
       },
   });
 }
@@ -31,21 +49,7 @@ function callEventApi(url, eventId) {
     params:
       {
         event_id: eventId,
-        token: '71705-bVomi4R8vMvyBY',
-      },
-  });
-}
-
-function callApiByCountry(url, countryCode) {
-  return axios({
-    method: 'get',
-    url,
-    params:
-      {
-        sport_id: 1,
-        cc: countryCode,
-        token: '71705-bVomi4R8vMvyBY',
-        skip_esports: true,
+        token: '',
       },
   });
 }
@@ -93,13 +97,20 @@ router.get('/liveEvents', cache('20 seconds'), (req, res, next) => {
 });
 
 router.get('/upcomingEvents', cache('30 minutes'), (req, res, next) => {
-  Promise.all([
-    callApiByCountry(upcomingURL, 'gb'),
-    callApiByCountry(upcomingURL, 'it'),
-    callApiByCountry(upcomingURL, 'de'),
-    callApiByCountry(upcomingURL, 'es'),
-    callApiByCountry(upcomingURL, 'fr'),
-  ])
+  const promises = [];
+
+  countries.forEach((country) => {
+    if (country.component && !country.exclude) {
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 1));
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 2));
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(), country.cc, 3));
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 1));
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 2));
+      promises.push(callApiByDateAndCountry(upcomingURL, getDate(1), country.cc, 3));
+    }
+  });
+
+  Promise.all(promises)
     .then((results) => {
       const mergedResults = [].concat(...results.map((result) => result.data.results));
       return mergedResults.sort((a, b) => a.time.localeCompare(b.time));
@@ -113,52 +124,75 @@ router.get('/upcomingEvents', cache('30 minutes'), (req, res, next) => {
         day: 'numeric',
       };
       results.forEach((result) => {
-        const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
-        const upcomingDate = upcomingEvents.find((event) => event.date === resultDate);
-        if (upcomingDate) {
-          const league = upcomingDate.matches.find((evt) => evt.leagueName === result.league.name);
-          if (league) {
-            league.upcomingMatches.push(result);
-          } else {
-            upcomingDate.matches.push({
-              leagueName: result.league.name,
-              countryCode: result.league.cc,
-              upcomingMatches: [
-                result,
-              ],
-            });
-          }
-        } else {
-          upcomingEvents.push({
-            date: resultDate,
-            matches: [
-              {
+        if (freeLeagues.includes(result.league.name)) {
+          const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
+          const comingDate = upcomingEvents.find((event) => event.date === resultDate);
+          if (comingDate) {
+            const league = comingDate.matches.find((evt) => evt.leagueName === result.league.name);
+            if (league) {
+              league.upcomingMatches.push(result);
+            } else {
+              comingDate.matches.push({
                 leagueName: result.league.name,
                 countryCode: result.league.cc,
                 upcomingMatches: [
                   result,
                 ],
-              },
-            ],
-          });
+              });
+            }
+          } else {
+            upcomingEvents.push({
+              date: resultDate,
+              matches: [
+                {
+                  leagueName: result.league.name,
+                  countryCode: result.league.cc,
+                  upcomingMatches: [
+                    result,
+                  ],
+                },
+              ],
+            });
+          }
         }
       });
+
+      upcomingEvents.forEach((event) => {
+        const sortedResult = [];
+        freeLeagues.forEach((key) => {
+          let found = false;
+          event.matches = event.matches.filter((item) => {
+            if (!found && item.leagueName === key) {
+              sortedResult.push(item);
+              found = true;
+              return false;
+            }
+            return true;
+          });
+        });
+        event.matches = sortedResult;
+      });
+
       res.json(upcomingEvents);
     }, (error) => next(error));
 });
 
 router.get('/eventResults', cache('15 minutes'), (req, res, next) => {
-  Promise.all([
-    callApiByCountry(resultsURL, 'gb'),
-    callApiByCountry(resultsURL, 'it'),
-    callApiByCountry(resultsURL, 'de'),
-    callApiByCountry(resultsURL, 'es'),
-    callApiByCountry(resultsURL, 'fr'),
-  ])
-    .then((results) => {
-      const mergedResults = [].concat(...results.map((result) => result.data.results));
-      return mergedResults.sort((a, b) => b.time.localeCompare(a.time));
-    })
+  const promises = [];
+
+  countries.forEach((country) => {
+    if (country.component && !country.exclude) {
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 1));
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 2));
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(), country.cc, 3));
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 1));
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 2));
+      promises.push(callApiByDateAndCountry(resultsURL, getDate(-1), country.cc, 3));
+    }
+  });
+
+  Promise.all(promises)
+    .then((results) => [].concat(...results.map((result) => result.data.results)))
     .then((results) => {
       const matchResults = [];
       const now = Date.now();
@@ -169,37 +203,55 @@ router.get('/eventResults', cache('15 minutes'), (req, res, next) => {
         day: 'numeric',
       };
       results.forEach((result) => {
-        const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
-        if (new Date(parseInt(result.time * 1000, 10)).valueOf() < now.valueOf()) {
-          const upcomingDate = matchResults.find((event) => event.date === resultDate);
-          if (upcomingDate && result.scores) {
-            const league = upcomingDate.matches.find((e) => e.leagueName === result.league.name);
-            if (league) {
-              league.endedMatches.push(result);
-            } else {
-              upcomingDate.matches.push({
-                leagueName: result.league.name,
-                countryCode: result.league.cc,
-                endedMatches: [
-                  result,
-                ],
-              });
-            }
-          } else if (result.scores) {
-            matchResults.push({
-              date: resultDate,
-              matches: [
-                {
+        if (freeLeagues.includes(result.league.name)) {
+          const resultDate = new Date(parseInt(result.time * 1000, 10)).toLocaleDateString('en-GB', options);
+          if (new Date(parseInt(result.time * 1000, 10)).valueOf() < now.valueOf()) {
+            const upcomingDate = matchResults.find((event) => event.date === resultDate);
+            if (upcomingDate && result.scores) {
+              const league = upcomingDate.matches.find((e) => e.leagueName === result.league.name);
+              if (league) {
+                league.endedMatches.push(result);
+              } else {
+                upcomingDate.matches.push({
                   leagueName: result.league.name,
                   countryCode: result.league.cc,
                   endedMatches: [
                     result,
                   ],
-                },
-              ],
-            });
+                });
+              }
+            } else if (result.scores) {
+              matchResults.push({
+                date: resultDate,
+                matches: [
+                  {
+                    leagueName: result.league.name,
+                    countryCode: result.league.cc,
+                    endedMatches: [
+                      result,
+                    ],
+                  },
+                ],
+              });
+            }
           }
         }
+      });
+
+      matchResults.forEach((event) => {
+        const sortedResult = [];
+        freeLeagues.forEach((key) => {
+          let found = false;
+          event.matches = event.matches.filter((item) => {
+            if (!found && item.leagueName === key) {
+              sortedResult.push(item);
+              found = true;
+              return false;
+            }
+            return true;
+          });
+        });
+        event.matches = sortedResult;
       });
       res.json(matchResults);
     }, (error) => next(error));

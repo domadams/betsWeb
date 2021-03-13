@@ -9,13 +9,10 @@ import PropTypes from 'prop-types';
 import Placeholder from '../Placeholder';
 
 const useStyles = makeStyles({
-  clubLogo: {
-    paddingRight: 8,
-    marginTop: 5,
-    minWidth: 28,
-    maxWidth: 28,
-    minHeight: 20,
-    maxHeight: 20,
+  clubLogoImage: {
+    marginRight: 8,
+    marginTop: 3,
+    animation: '$fadeIn ease 300ms',
   },
   footballIcon: {
     minHeight: 20,
@@ -25,7 +22,7 @@ const useStyles = makeStyles({
     verticalAlign: 'middle',
   },
   footballIconAppear: {
-    animation: '$fadeInOut infinite 15000ms',
+    animation: '$fadeInOut infinite 15s',
   },
   '@keyframes fadeInOut': {
     '0%': {
@@ -39,6 +36,14 @@ const useStyles = makeStyles({
     },
     '100%': {
       opacity: 0,
+    },
+  },
+  '@keyframes fadeIn': {
+    '0%': {
+      opacity: 0,
+    },
+    '100%': {
+      opacity: 1,
     },
   },
 });
@@ -82,9 +87,10 @@ const TeamName = ({
       alignItems="center"
     >
       <Grid item xs={2}>
+
         <LazyLoad
           height={20}
-          offset={150}
+          offset={450}
           placeholder={<Placeholder />}
         >
           {logo
@@ -92,9 +98,9 @@ const TeamName = ({
               <img
                 src={`https://assets.b365api.com/images/team/m/${logo}.png`}
                 alt={`${name} logo`}
-                className={classes.clubLogo}
-                width={28}
+                width={20}
                 height={20}
+                className={classes.clubLogoImage}
               />
             )
             : <Placeholder />}

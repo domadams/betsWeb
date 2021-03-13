@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import {
-  Grid, Paper, makeStyles, Typography,
+  Grid, Paper, makeStyles,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Favourite from '../favourite';
-import TeamName from '../teamName';
-import ScoreBox from '../scoreBox';
+
+const Typography = lazy(() => import('@material-ui/core/Typography'));
+const Favourite = lazy(() => import('../favourite'));
+const TeamName = lazy(() => import('../teamName'));
+const ScoreBox = lazy(() => import('../scoreBox'));
 
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
+  },
+  fadeIn: {
+    animation: '$fadeIn ease 300ms',
   },
   marginAuto: {
     margin: 'auto',
@@ -20,13 +25,15 @@ const useStyles = makeStyles({
     marginBottom: 10,
     width: '96%',
     backgroundColor: '#fff',
+    minHeight: 72,
   },
   pulseAnimate: {
     animation: '$pulseUpdate 900ms infinite',
   },
   startTime: {
     color: '#be1e26',
-    fontWeight: 'bold',
+    fontWeight: 600,
+    animation: '$fadeIn ease 400ms',
   },
   minuteBlink: {
     '&::after': {
@@ -46,6 +53,14 @@ const useStyles = makeStyles({
       opacity: 0,
     },
     '51%': {
+      opacity: 1,
+    },
+  },
+  '@keyframes fadeIn': {
+    '0%': {
+      opacity: 0,
+    },
+    '100%': {
       opacity: 1,
     },
   },
@@ -117,40 +132,56 @@ const MatchItem = ({
         <Grid container spacing={0}>
           <Grid item xs={1} className={classes.marginAuto}>
             { showFavouriteIcon
-              ? <Favourite eventId={eventId} />
+              ? (
+                <Suspense fallback={<></>}>
+                  <Favourite eventId={eventId} className={classes.fadeIn} />
+                </Suspense>
+              )
               : null}
           </Grid>
           <Grid item xs={2} className={`${classes.marginAuto}`}>
-            <Typography variant="subtitle2" className={timeClasses}>{kickOffTime}</Typography>
+            <Suspense fallback={<></>}>
+              <Typography variant="subtitle2" className={timeClasses}>{kickOffTime}</Typography>
+            </Suspense>
           </Grid>
           <Grid item xs={8} sm>
             <Grid item xs direction="column" spacing={1}>
               <Grid item xs>
-                <TeamName
-                  logo={homeImageId}
-                  name={homeTeamName}
-                  score={homeTeamScore}
-                  position={homePosition}
-                  flashUpdate={flashUpdate}
-                />
-                <TeamName
-                  logo={awayImageId}
-                  name={awayTeamName}
-                  score={awayTeamScore}
-                  position={awayPosition}
-                  flashUpdate={flashUpdate}
-                />
+                <Suspense fallback={<></>}>
+                  <TeamName
+                    logo={homeImageId}
+                    name={homeTeamName}
+                    score={homeTeamScore}
+                    position={homePosition}
+                    flashUpdate={flashUpdate}
+                    className={classes.fadeIn}
+                  />
+                  <TeamName
+                    logo={awayImageId}
+                    name={awayTeamName}
+                    score={awayTeamScore}
+                    position={awayPosition}
+                    flashUpdate={flashUpdate}
+                    className={classes.fadeIn}
+                  />
+                </Suspense>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={1}>
             <Grid item xs direction="column" spacing={0}>
               <Grid item xs>
-                <ScoreBox
-                  homeTeamScore={homeTeamScore}
-                  awayTeamScore={awayTeamScore}
-                  flashUpdate={flashUpdate}
-                />
+                {homeTeamScore && awayTeamScore
+                  ? (
+                    <Suspense fallback={<></>}>
+                      <ScoreBox
+                        homeTeamScore={homeTeamScore}
+                        awayTeamScore={awayTeamScore}
+                        flashUpdate={flashUpdate}
+                      />
+                    </Suspense>
+                  )
+                  : null}
               </Grid>
             </Grid>
           </Grid>
@@ -164,11 +195,11 @@ MatchItem.propTypes = {
   eventId: PropTypes.string.isRequired,
   homeImageId: PropTypes.string.isRequired,
   homeTeamName: PropTypes.string.isRequired,
-  homeTeamScore: PropTypes.string.isRequired,
+  homeTeamScore: PropTypes.string,
   homePosition: PropTypes.string,
   awayImageId: PropTypes.string.isRequired,
   awayTeamName: PropTypes.string.isRequired,
-  awayTeamScore: PropTypes.string.isRequired,
+  awayTeamScore: PropTypes.string,
   awayPosition: PropTypes.string,
   kickOffTime: PropTypes.string.isRequired,
   showFavouriteIcon: PropTypes.bool.isRequired,
@@ -176,6 +207,8 @@ MatchItem.propTypes = {
 };
 
 MatchItem.defaultProps = {
+  awayTeamScore: null,
+  homeTeamScore: null,
   awayPosition: null,
   homePosition: null,
 };

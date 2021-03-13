@@ -1,3 +1,36 @@
+import {
+  FlagAR,
+  FlagAT,
+  FlagAU,
+  FlagBE,
+  FlagBR,
+  FlagCH,
+  FlagCO,
+  FlagCR,
+  FlagEC,
+  FlagES,
+  FlagGB_EN,
+  FlagGB_SCT,
+  FlagGB_WLS,
+  FlagDE,
+  FlagFR,
+  FlagGT,
+  FlagIL,
+  FlagIT,
+  FlagJP,
+  FlagKR,
+  FlagMX,
+  FlagNI,
+  FlagNL,
+  FlagPA,
+  FlagPL,
+  FlagPT,
+  FlagRU,
+  FlagSV,
+  FlagTR,
+  FlagUS,
+} from '@domadams2000/react-all-flags';
+
 const countries = [
   {
     cc: 'ad',
@@ -38,6 +71,7 @@ const countries = [
   {
     cc: 'ar',
     name: 'Argentina',
+    component: FlagAR,
   },
   {
     cc: 'as',
@@ -46,10 +80,12 @@ const countries = [
   {
     cc: 'at',
     name: 'Austria',
+    component: FlagAT,
   },
   {
     cc: 'au',
     name: 'Australia',
+    component: FlagAU,
   },
   {
     cc: 'aw',
@@ -78,6 +114,7 @@ const countries = [
   {
     cc: 'be',
     name: 'Belgium',
+    component: FlagBE,
   },
   {
     cc: 'bf',
@@ -122,6 +159,7 @@ const countries = [
   {
     cc: 'br',
     name: 'Brazil',
+    component: FlagBR,
   },
   {
     cc: 'bs',
@@ -170,6 +208,7 @@ const countries = [
   {
     cc: 'ch',
     name: 'Switzerland',
+    component: FlagCH,
   },
   {
     cc: 'ci',
@@ -194,10 +233,12 @@ const countries = [
   {
     cc: 'co',
     name: 'Colombia',
+    component: FlagCO,
   },
   {
     cc: 'cr',
     name: 'Costa Rica',
+    component: FlagCR,
   },
   {
     cc: 'cu',
@@ -226,6 +267,7 @@ const countries = [
   {
     cc: 'de',
     name: 'Germany',
+    component: FlagDE,
   },
   {
     cc: 'dj',
@@ -250,6 +292,7 @@ const countries = [
   {
     cc: 'ec',
     name: 'Ecuador',
+    component: FlagEC,
   },
   {
     cc: 'ee',
@@ -270,6 +313,7 @@ const countries = [
   {
     cc: 'es',
     name: 'Spain',
+    component: FlagES,
   },
   {
     cc: 'et',
@@ -302,6 +346,7 @@ const countries = [
   {
     cc: 'fr',
     name: 'France',
+    component: FlagFR,
   },
   {
     cc: 'ga',
@@ -310,6 +355,25 @@ const countries = [
   {
     cc: 'gb',
     name: 'England',
+    component: true,
+  },
+  {
+    cc: 'gb_en',
+    name: 'England',
+    component: FlagGB_EN,
+    exclude: true,
+  },
+  {
+    cc: 'gb_sct',
+    name: 'Scotland',
+    component: FlagGB_SCT,
+    exclude: true,
+  },
+  {
+    cc: 'gb_wls',
+    name: 'Wales',
+    component: FlagGB_WLS,
+    exclude: true,
   },
   {
     cc: 'gd',
@@ -366,6 +430,7 @@ const countries = [
   {
     cc: 'gt',
     name: 'Guatemala',
+    component: FlagGT,
   },
   {
     cc: 'gu',
@@ -414,6 +479,7 @@ const countries = [
   {
     cc: 'il',
     name: 'Israel',
+    component: FlagIL,
   },
   {
     cc: 'im',
@@ -442,6 +508,7 @@ const countries = [
   {
     cc: 'it',
     name: 'Italy',
+    component: FlagIT,
   },
   {
     cc: 'je',
@@ -458,6 +525,7 @@ const countries = [
   {
     cc: 'jp',
     name: 'Japan',
+    component: FlagJP,
   },
   {
     cc: 'ke',
@@ -490,6 +558,7 @@ const countries = [
   {
     cc: 'kr',
     name: 'South Korea',
+    component: FlagKR,
   },
   {
     cc: 'kw',
@@ -630,6 +699,7 @@ const countries = [
   {
     cc: 'mx',
     name: 'Mexico',
+    component: FlagMX,
   },
   {
     cc: 'my',
@@ -662,10 +732,12 @@ const countries = [
   {
     cc: 'ni',
     name: 'Nicaragua',
+    component: FlagNI,
   },
   {
     cc: 'nl',
     name: 'Netherlands',
+    component: FlagNL,
   },
   {
     cc: 'no',
@@ -694,6 +766,7 @@ const countries = [
   {
     cc: 'pa',
     name: 'Panama',
+    component: FlagPA,
   },
   {
     cc: 'pe',
@@ -718,6 +791,7 @@ const countries = [
   {
     cc: 'pl',
     name: 'Poland',
+    component: FlagPL,
   },
   {
     cc: 'pm',
@@ -738,6 +812,7 @@ const countries = [
   {
     cc: 'pt',
     name: 'Portugal',
+    component: FlagPT,
   },
   {
     cc: 'pw',
@@ -766,6 +841,7 @@ const countries = [
   {
     cc: 'ru',
     name: 'Russia',
+    component: FlagRU,
   },
   {
     cc: 'rw',
@@ -842,6 +918,7 @@ const countries = [
   {
     cc: 'sv',
     name: 'El Salvador',
+    component: FlagSV,
   },
   {
     cc: 'sx',
@@ -902,6 +979,7 @@ const countries = [
   {
     cc: 'tr',
     name: 'Turkey',
+    component: FlagTR,
   },
   {
     cc: 'tt',
@@ -934,6 +1012,7 @@ const countries = [
   {
     cc: 'us',
     name: 'USA',
+    component: FlagUS,
   },
   {
     cc: 'uy',

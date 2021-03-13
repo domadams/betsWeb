@@ -16,6 +16,10 @@ function matchResults({ fetchInitialData, staticContext }) {
     return <Loading />;
   }
 
+  if (!events) {
+    loadEvents(fetchInitialData, staticContext, true);
+  }
+
   return (
     <>
       <Typography variant="h5">Results</Typography>
