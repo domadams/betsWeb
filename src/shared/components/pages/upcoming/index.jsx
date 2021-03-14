@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Divider, List, makeStyles, Typography} from '@material-ui/core';
+import Sticky from "react-sticky-el";
 import loadEvents from '../../helpers/loadEvents';
 import LeagueBanner from '../../leagueBanner';
 import DateBanner from '../../dateBanner';
@@ -38,8 +39,10 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
             matches,
           },
         ) => (
-          <>
-            <DateBanner date={date} />
+          <div className="matchList">
+            <Sticky boundaryElement=".matchList" stickyStyle={{zIndex: 50}}>
+              <DateBanner date={date} />
+            </Sticky>
             {matches.map((
               {
                 leagueName,
@@ -80,7 +83,7 @@ const Upcoming = ({ fetchInitialData, staticContext }) => {
                 })}
               </>
             ))}
-          </>
+          </div>
         ))}
       </List>
     </>
