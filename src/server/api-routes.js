@@ -5,6 +5,7 @@ import getDate from './utils/getDate';
 import { freeLeagues } from '../shared/leagues';
 import countries from '../shared/countries';
 import favouritesOrder from '../shared/favouritesOrder';
+import teamData from "../shared/teamData/teamData";
 
 const router = express.Router();
 const cache = apicache.middleware;
@@ -272,13 +273,21 @@ router.get('/favourites', (req, res, next) => {
           const events = [];
           mergedResults = mergedResults.filter((item) => {
             if (item.time_status === key.time_status) {
+              const homeTeam = teamData.find(team => team.teamId === item.home.id);
+              const awayTeam = teamData.find(team => team.teamId === item.away.id);
+              if(homeTeam && homeTeam.stats) {
+                item.home['stats'] = homeTeam.stats;
+              }
+              if(awayTeam && awayTeam.stats) {
+                item.away['stats'] = awayTeam.stats;
+              }
               events.push(item);
               return false;
             }
             return true;
           });
           events.sort((a, b) => {
-            b.time.localeCompare(a.time)
+            a.time.localeCompare(b.time)
           })
           sortedResults.push({
             label: key.label,

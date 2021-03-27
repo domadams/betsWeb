@@ -85,10 +85,12 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
                               home: {
                                 name: homeName,
                                 image_id: homeImageId,
+                                stats: homeStats = {}
                               },
                               away: {
                                 name: awayName,
                                 image_id: awayImageId,
+                                stats: awayStats = {}
                               },
                               time,
                               time_status: timeStatus,
@@ -107,6 +109,7 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
                                 md = 1,
                                 ts = 0,
                               } = {},
+                              stats = null,
                             } = event;
 
                             let {
@@ -138,6 +141,9 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
                                 kickOffTime={tm}
                                 flashUpdate={flashUpdate}
                                 key={homeName}
+                                stats={stats}
+                                homeStats={homeStats}
+                                awayStats={awayStats}
                               />
                             );
                           }

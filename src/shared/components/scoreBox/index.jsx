@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles({
   score: {
     backgroundColor: '#888',
-    width: 25,
+    width: 28,
     height: 25,
     textAlign: 'center',
     borderRadius: 2,
@@ -14,10 +14,10 @@ const useStyles = makeStyles({
     marginTop: 1,
   },
   scoreWinning: {
-    backgroundColor: 'green',
+    backgroundColor: '#118826',
   },
   scoreLosing: {
-    backgroundColor: 'red',
+    backgroundColor: '#BE1D27',
   },
   scoreDraw: {
     backgroundColor: '#E1Ad01',

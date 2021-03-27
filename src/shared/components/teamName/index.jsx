@@ -14,6 +14,18 @@ const useStyles = makeStyles({
     marginTop: 3,
     animation: '$fadeIn ease 300ms',
   },
+  redCards: {
+    backgroundColor: 'red',
+    borderRadius: 1,
+    textAlign: "center",
+    color: 'white',
+    fontWeight: 700,
+    width: 14,
+    marginLeft: 6,
+    height: 20,
+    lineHeight: '20px',
+    display: "inline-block",
+  },
   footballIcon: {
     minHeight: 20,
     maxHeight: 20,
@@ -49,7 +61,7 @@ const useStyles = makeStyles({
 });
 
 const TeamName = ({
-  logo, name, score, position, flashUpdate,
+  logo, name, score, redCard, position, flashUpdate,
 }) => {
   const classes = useStyles();
   const [scoreUpdate, setScoreUpdate] = React.useState('inherit');
@@ -87,7 +99,6 @@ const TeamName = ({
       alignItems="center"
     >
       <Grid item xs={2}>
-
         <LazyLoad
           height={20}
           offset={450}
@@ -122,6 +133,15 @@ const TeamName = ({
               : null
           }
           {
+            (redCard && redCard !== '0')
+            ? (
+              <span className={classes.redCards}>
+                {redCard}
+              </span>
+              )
+            : null
+          }
+          {
             flashUpdate
               ? (
                 <img
@@ -145,12 +165,14 @@ TeamName.propTypes = {
   logo: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.string.isRequired,
+  redCard: PropTypes.string,
   flashUpdate: PropTypes.bool.isRequired,
   position: PropTypes.string,
 };
 
 TeamName.defaultProps = {
   position: null,
+  redCard: null,
 };
 
 export default memo(TeamName);

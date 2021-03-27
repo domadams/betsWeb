@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import {
-  Grid, Paper, makeStyles,
+  Grid, Paper, makeStyles, CircularProgress,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,7 @@ const Typography = lazy(() => import('@material-ui/core/Typography'));
 const Favourite = lazy(() => import('../favourite'));
 const TeamName = lazy(() => import('../teamName'));
 const ScoreBox = lazy(() => import('../scoreBox'));
+const StatsContainer = lazy(() => import('../statsContainer'));
 
 const useStyles = makeStyles({
   root: {
@@ -93,9 +94,23 @@ const MatchItem = ({
   awayPosition,
   kickOffTime,
   flashUpdate,
+  stats,
+  homeStats,
+  awayStats,
 }) => {
   const classes = useStyles();
   const [timeUpdate, setTimeUpdate] = React.useState('inherit');
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  let homeRedCards, awayRedCards = null;
+  if(stats && stats.redcards) {
+    homeRedCards = stats.redcards[0];
+    awayRedCards = stats.redcards[1];
+  }
   let timeClasses = classes.startTime;
 
   if (kickOffTime !== 'HT' && kickOffTime !== 'FT' && flashUpdate) {
@@ -129,7 +144,7 @@ const MatchItem = ({
   return (
     <div className={classes.root}>
       <Paper className={`${classes.paper} ${timeUpdate}`}>
-        <Grid container spacing={0}>
+        <Grid container spacing={0} onClick={handleExpandClick}>
           <Grid item xs={1} className={classes.marginAuto}>
             { showFavouriteIcon
               ? (
@@ -145,47 +160,63 @@ const MatchItem = ({
             </Suspense>
           </Grid>
           <Grid item xs={8} sm>
-            <Grid item xs direction="column" spacing={1}>
-              <Grid item xs>
-                <Suspense fallback={<></>}>
-                  <TeamName
-                    logo={homeImageId}
-                    name={homeTeamName}
-                    score={homeTeamScore}
-                    position={homePosition}
-                    flashUpdate={flashUpdate}
-                    className={classes.fadeIn}
-                  />
-                  <TeamName
-                    logo={awayImageId}
-                    name={awayTeamName}
-                    score={awayTeamScore}
-                    position={awayPosition}
-                    flashUpdate={flashUpdate}
-                    className={classes.fadeIn}
-                  />
-                </Suspense>
+            <Suspense fallback={<></>}>
+              <Grid item xs={12}>
+                <TeamName
+                  logo={homeImageId}
+                  name={homeTeamName}
+                  score={homeTeamScore}
+                  position={homePosition}
+                  flashUpdate={flashUpdate}
+                  className={classes.fadeIn}
+                  redCard={homeRedCards}
+                />
               </Grid>
-            </Grid>
+              <Grid item xs={12}>
+                <TeamName
+                  logo={awayImageId}
+                  name={awayTeamName}
+                  score={awayTeamScore}
+                  position={awayPosition}
+                  flashUpdate={flashUpdate}
+                  className={classes.fadeIn}
+                  redCard={awayRedCards}
+                />
+              </Grid>
+            </Suspense>
           </Grid>
           <Grid item xs={1}>
-            <Grid item xs direction="column" spacing={0}>
-              <Grid item xs>
-                {homeTeamScore && awayTeamScore
-                  ? (
-                    <Suspense fallback={<></>}>
-                      <ScoreBox
-                        homeTeamScore={homeTeamScore}
-                        awayTeamScore={awayTeamScore}
-                        flashUpdate={flashUpdate}
-                      />
-                    </Suspense>
-                  )
-                  : null}
-              </Grid>
-            </Grid>
+            {homeTeamScore && awayTeamScore
+              ? (
+                <Suspense fallback={<></>}>
+                  <ScoreBox
+                    homeTeamScore={homeTeamScore}
+                    awayTeamScore={awayTeamScore}
+                    flashUpdate={flashUpdate}
+                  />
+                </Suspense>
+              )
+              : null}
           </Grid>
         </Grid>
+        {stats && homeStats && awayStats ?
+          (
+            <Suspense fallback={
+              <>
+                <CircularProgress />
+                <br/>
+                <i className={classes.loading}>Loading...️</i>
+              </>
+            }>
+              <StatsContainer
+                stats={stats}
+                homeStats={homeStats}
+                awayStats={awayStats}
+              />
+            </Suspense>
+          )
+          : null
+        }
       </Paper>
     </div>
   );
@@ -204,6 +235,9 @@ MatchItem.propTypes = {
   kickOffTime: PropTypes.string.isRequired,
   showFavouriteIcon: PropTypes.bool.isRequired,
   flashUpdate: PropTypes.bool.isRequired,
+  stats: PropTypes.instanceOf(Object),
+  homeStats: PropTypes.instanceOf(Object),
+  awayStats: PropTypes.instanceOf(Object),
 };
 
 MatchItem.defaultProps = {
@@ -211,6 +245,9 @@ MatchItem.defaultProps = {
   homeTeamScore: null,
   awayPosition: null,
   homePosition: null,
+  stats: null,
+  homeStats: null,
+  awayStats: null,
 };
 
 export default MatchItem;
