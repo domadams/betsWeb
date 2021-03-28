@@ -69,8 +69,7 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
               ) => (
                 <>
                   {(matches && matches.length > 0)
-                    ?
-                    (
+                    ? (
                       <>
                         <div className={classes.favouriteHeader}>
                           <Typography variant="h6">{label}</Typography>
@@ -85,12 +84,12 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
                               home: {
                                 name: homeName,
                                 image_id: homeImageId,
-                                stats: homeStats = {}
+                                stats: homeStats = {},
                               },
                               away: {
                                 name: awayName,
                                 image_id: awayImageId,
-                                stats: awayStats = {}
+                                stats: awayStats = {},
                               },
                               time,
                               time_status: timeStatus,
@@ -151,8 +150,7 @@ function FavouritesPage({ fetchInitialData, staticContext }) {
                         })}
                       </>
                     )
-                    : null
-                  }
+                    : null}
                 </>
               ))}
             </List>

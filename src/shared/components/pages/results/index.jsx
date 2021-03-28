@@ -41,7 +41,7 @@ function matchResults({ fetchInitialData, staticContext }) {
           },
         ) => (
           <div className="matchList">
-            <Sticky boundaryElement=".matchList" stickyStyle={{zIndex: 50}}>
+            <Sticky boundaryElement=".matchList" stickyStyle={{ zIndex: 50 }}>
               <DateBanner date={date} />
             </Sticky>
             {matches.map((

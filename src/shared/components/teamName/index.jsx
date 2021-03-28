@@ -17,14 +17,14 @@ const useStyles = makeStyles({
   redCards: {
     backgroundColor: 'red',
     borderRadius: 1,
-    textAlign: "center",
+    textAlign: 'center',
     color: 'white',
     fontWeight: 700,
     width: 14,
     marginLeft: 6,
     height: 20,
     lineHeight: '20px',
-    display: "inline-block",
+    display: 'inline-block',
   },
   footballIcon: {
     minHeight: 20,
@@ -102,7 +102,7 @@ const TeamName = ({
         <LazyLoad
           height={20}
           offset={450}
-          once={true}
+          once
           placeholder={<Placeholder />}
         >
           {logo
@@ -134,12 +134,12 @@ const TeamName = ({
           }
           {
             (redCard && redCard !== '0')
-            ? (
-              <span className={classes.redCards}>
-                {redCard}
-              </span>
+              ? (
+                <span className={classes.redCards}>
+                  {redCard}
+                </span>
               )
-            : null
+              : null
           }
           {
             flashUpdate

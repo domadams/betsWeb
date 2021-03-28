@@ -11,6 +11,6 @@ const favouritesOrder = [
     time_status: '3',
     label: 'Ended',
   },
-]
+];
 
 export default favouritesOrder;

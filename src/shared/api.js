@@ -15,7 +15,11 @@ if (__isBrowser__) {
 export function fetchLiveMatches() {
   const encodedURI = encodeURI(`${basePath}/api/liveEvents`);
 
-  return fetch(encodedURI)
+  return fetch(encodedURI, {
+    headers: {
+      'akamai-x-serial-no': '8739201',
+    },
+  })
     .then((data) => data.json())
     .catch(() => null);
 }
@@ -23,7 +27,11 @@ export function fetchLiveMatches() {
 export function fetchUpcomingMatches() {
   const encodedURI = encodeURI(`${basePath}/api/upcomingEvents`);
 
-  return fetch(encodedURI)
+  return fetch(encodedURI, {
+    headers: {
+      'akamai-x-serial-no': '8739202',
+    },
+  })
     .then((data) => data.json())
     .catch(() => null);
 }
@@ -31,14 +39,22 @@ export function fetchUpcomingMatches() {
 export function fetchMatchResults() {
   const encodedURI = encodeURI(`${basePath}/api/eventResults`);
 
-  return fetch(encodedURI)
+  return fetch(encodedURI, {
+    headers: {
+      'akamai-x-serial-no': '8739203',
+    },
+  })
     .then((data) => data.json())
     .catch(() => null);
 }
 
 export function fetchFavourites(favourites) {
   const encodedURI = encodeURI(`${basePath}/api/favourites?${querystring.stringify({ favourites: JSON.stringify(favourites) })}`);
-  return fetch(encodedURI)
+  return fetch(encodedURI, {
+    headers: {
+      'akamai-x-serial-no': '8739204',
+    },
+  })
     .then((data) => data.json())
     .catch(() => null);
 }

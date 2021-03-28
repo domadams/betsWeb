@@ -14,6 +14,7 @@ import compression from 'compression';
 import contentSecurityPolicy from './middleware/contentSecurityPolicy';
 import logger from './middleware/winston';
 import errorHandler from './errorHandler';
+import apiRestriction from './middleware/apiRestriction';
 import apiRoutes from './api-routes';
 import router from './server-router';
 
@@ -25,7 +26,7 @@ export default () => express()
   .use(express.static(joinPath(__dirname, 'public')))
   .use(helmet())
   .use(contentSecurityPolicy(nonce))
-  .use('/api', apiRoutes)
+  .use('/api', apiRestriction, apiRoutes)
   .use('/', router(nonce))
   .use((err, req, res, next) => {
     logger.error(`${req.method} - ${err.message}  - ${req.originalUrl} - ${req.ip}`);

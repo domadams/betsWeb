@@ -106,8 +106,9 @@ const MatchItem = ({
     setExpanded(!expanded);
   };
 
-  let homeRedCards, awayRedCards = null;
-  if(stats && stats.redcards) {
+  let homeRedCards; let
+    awayRedCards = null;
+  if (stats && stats.redcards) {
     homeRedCards = stats.redcards[0];
     awayRedCards = stats.redcards[1];
   }
@@ -199,15 +200,16 @@ const MatchItem = ({
               : null}
           </Grid>
         </Grid>
-        {stats && homeStats && awayStats ?
-          (
-            <Suspense fallback={
+        {stats && homeStats && awayStats
+          ? (
+            <Suspense fallback={(
               <>
                 <CircularProgress />
-                <br/>
+                <br />
                 <i className={classes.loading}>Loading...️</i>
               </>
-            }>
+            )}
+            >
               <StatsContainer
                 stats={stats}
                 homeStats={homeStats}
@@ -215,8 +217,7 @@ const MatchItem = ({
               />
             </Suspense>
           )
-          : null
-        }
+          : null}
       </Paper>
     </div>
   );

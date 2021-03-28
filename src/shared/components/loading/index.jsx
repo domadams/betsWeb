@@ -15,7 +15,7 @@ const Loading = () => {
   return (
     <div className={classes.loading}>
       <CircularProgress />
-      <br/>
+      <br />
       <i className={classes.loading}>Loading...️</i>
     </div>
   );

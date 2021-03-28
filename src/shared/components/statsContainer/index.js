@@ -3,26 +3,26 @@ import {
   Hidden,
   makeStyles,
   Paper,
-} from "@material-ui/core";
-import React from "react";
+} from '@material-ui/core';
+import React from 'react';
 
 const useStyles = makeStyles({
   statsContainer: {
-    marginTop:6,
+    marginTop: 6,
     marginLeft: 10,
     animation: '$fadeIn ease 300ms',
     marginBottom: 2,
   },
   statsHeader: {
-    textAlign: "center",
+    textAlign: 'center',
     fontWeight: 700,
     borderRadius: 2,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: '#E0E0E0',
     color: '#555555',
   },
-  statRoot:{
-    textAlign: "center",
-    backgroundColor: "#E0E0E0",
+  statRoot: {
+    textAlign: 'center',
+    backgroundColor: '#E0E0E0',
     color: '#555555',
   },
   darkGreen: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 });
 
 const statPercentage = (historicStat, liveStat, classes) => {
-  const percentage = ((liveStat/historicStat) * 100)
+  const percentage = ((liveStat / historicStat) * 100);
   switch (true) {
     case (percentage < 50):
       return `${classes.statRoot} ${classes.red}`;
@@ -67,9 +67,9 @@ const statPercentage = (historicStat, liveStat, classes) => {
     default:
       return `${classes.statRoot} ${classes.darkGreen}`;
   }
-}
+};
 
-const StatsContainer = ({stats, homeStats, awayStats}) => {
+const StatsContainer = ({ stats, homeStats, awayStats }) => {
   const classes = useStyles();
 
   const {
@@ -78,21 +78,21 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
     dangerous_attacks,
     corners,
     possession_rt,
-  } = stats
+  } = stats;
 
   const {
     corners: homeCorners,
     shotsOffTarget: homeShotsOffTgt,
     shotsOnTarget: homeShotsOnTgt,
     possession: homePoss,
-  } = homeStats
+  } = homeStats;
 
   const {
     corners: awayCorners,
     shotsOffTarget: awayShotsOffTgt,
     shotsOnTarget: awayShotsOnTgt,
     possession: awayPoss,
-  } = awayStats
+  } = awayStats;
 
   const shotsOffClassesHome = statPercentage(homeShotsOffTgt, on_target[0], classes);
   const shotsOffClassesAway = statPercentage(awayShotsOffTgt, on_target[1], classes);
@@ -107,9 +107,7 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
     <Grid container spacing={1} className={classes.statsContainer}>
       <Grid item xs={12}>
         <Grid container spacing={1} className={classes.statsContainer}>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1} />
           <Grid item xs={2}>
             <Hidden smDown>
               <Paper className={classes.statsHeader}>SHOTS ON TARGET</Paper>
@@ -150,9 +148,7 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
               <Paper className={classes.statsHeader}>POSS</Paper>
             </Hidden>
           </Grid>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1} />
           <Grid item xs={1}>
             <Hidden smDown>
               <Paper className={classes.statsHeader}>HOME</Paper>
@@ -165,13 +161,13 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
             <Paper className={shotsOnClassesHome}>{on_target[0]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{homeShotsOnTgt ? homeShotsOnTgt : '-'}</Paper>
+            <Paper className={classes.statRoot}>{homeShotsOnTgt || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={shotsOffClassesHome}>{off_target[0]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{homeShotsOffTgt ? homeShotsOffTgt : '-'}</Paper>
+            <Paper className={classes.statRoot}>{homeShotsOffTgt || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={classes.statRoot}>{dangerous_attacks[0]}</Paper>
@@ -183,17 +179,15 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
             <Paper className={cornersClassesHome}>{corners[0]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{homeCorners ? homeCorners : '-'}</Paper>
+            <Paper className={classes.statRoot}>{homeCorners || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={possClassesHome}>{possession_rt[0]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{homePoss ? homePoss : '-'}</Paper>
+            <Paper className={classes.statRoot}>{homePoss || '-'}</Paper>
           </Grid>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1} />
           <Grid item xs={1}>
             <Hidden smDown>
               <Paper className={classes.statsHeader}>AWAY</Paper>
@@ -206,13 +200,13 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
             <Paper className={shotsOnClassesAway}>{on_target[1]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{awayShotsOnTgt ? awayShotsOnTgt : '-'}</Paper>
+            <Paper className={classes.statRoot}>{awayShotsOnTgt || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={shotsOffClassesAway}>{off_target[1]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{awayShotsOffTgt ? awayShotsOffTgt : '-'}</Paper>
+            <Paper className={classes.statRoot}>{awayShotsOffTgt || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={classes.statRoot}>{dangerous_attacks[1]}</Paper>
@@ -224,21 +218,19 @@ const StatsContainer = ({stats, homeStats, awayStats}) => {
             <Paper className={cornersClassesAway}>{corners[1]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{awayCorners ? awayCorners : '-'}</Paper>
+            <Paper className={classes.statRoot}>{awayCorners || '-'}</Paper>
           </Grid>
           <Grid item xs={1}>
             <Paper className={possClassesAway}>{possession_rt[1]}</Paper>
           </Grid>
           <Grid item xs={1}>
-            <Paper className={classes.statRoot}>{awayPoss ? awayPoss : '-'}</Paper>
+            <Paper className={classes.statRoot}>{awayPoss || '-'}</Paper>
           </Grid>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1} />
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
 export default StatsContainer;

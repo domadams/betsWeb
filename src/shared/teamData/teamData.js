@@ -1,4 +1,4 @@
-import premierLeagueTeamData from "./gb/premierLeagueTeamData";
+import premierLeagueTeamData from './gb/premierLeagueTeamData';
 
 const teamData = [].concat(
   premierLeagueTeamData,

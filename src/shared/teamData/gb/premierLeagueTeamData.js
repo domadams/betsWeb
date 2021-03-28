@@ -7,7 +7,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 4,
       possession: 53,
-    }
+    },
   },
   {
     teamId: '43850',
@@ -17,7 +17,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 5,
       possession: 49,
-    }
+    },
   },
   {
     teamId: '17161',
@@ -27,7 +27,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 4,
       possession: 51,
-    }
+    },
   },
   {
     teamId: '17159',
@@ -37,7 +37,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 3,
       possession: 41,
-    }
+    },
   },
   {
     teamId: '44000',
@@ -47,7 +47,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 5,
       possession: 62,
-    }
+    },
   },
   {
     teamId: '17189',
@@ -57,7 +57,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 3,
       shotsOnTarget: 3,
       possession: 40,
-    }
+    },
   },
   {
     teamId: '44249',
@@ -67,7 +67,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 4,
       possession: 47,
-    }
+    },
   },
   {
     teamId: '17170',
@@ -77,7 +77,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 4,
       possession: 50,
-    }
+    },
   },
   {
     teamId: '17175',
@@ -87,7 +87,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 6,
       shotsOnTarget: 5,
       possession: 60,
-    }
+    },
   },
   {
     teamId: '23452',
@@ -97,7 +97,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 6,
       possession: 53,
-    }
+    },
   },
   {
     teamId: '23451',
@@ -107,7 +107,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 5,
       possession: 63,
-    }
+    },
   },
   {
     teamId: '708',
@@ -117,7 +117,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 6,
       possession: 64,
-    }
+    },
   },
   {
     teamId: '10899',
@@ -127,7 +127,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 6,
       possession: 56,
-    }
+    },
   },
   {
     teamId: '23478',
@@ -137,7 +137,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 4,
       possession: 39,
-    }
+    },
   },
   {
     teamId: '3013',
@@ -147,7 +147,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 3,
       shotsOnTarget: 3,
       possession: 41,
-    }
+    },
   },
   {
     teamId: '17231',
@@ -157,7 +157,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 4,
       possession: 53,
-    }
+    },
   },
   {
     teamId: '17212',
@@ -167,7 +167,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 4,
       possession: 50,
-    }
+    },
   },
   {
     teamId: '331',
@@ -177,7 +177,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 4,
       shotsOnTarget: 3,
       possession: 38,
-    }
+    },
   },
   {
     teamId: '709',
@@ -187,7 +187,7 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 4,
       possession: 41,
-    }
+    },
   },
   {
     teamId: '17383',
@@ -197,8 +197,8 @@ const premierLeagueTeamData = [
       shotsOffTarget: 5,
       shotsOnTarget: 4,
       possession: 48,
-    }
+    },
   },
-]
+];
 
 export default premierLeagueTeamData;

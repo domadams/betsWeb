@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Divider, List, makeStyles, Typography} from '@material-ui/core';
+import {
+  Divider, List, makeStyles, Typography,
+} from '@material-ui/core';
 import loadEvents from '../../helpers/loadEvents';
 import MatchItem from '../../matchItem';
 import Loading from '../../loading';
